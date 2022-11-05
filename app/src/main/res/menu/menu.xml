@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/dashboard_fragment"
+        android:icon="@drawable/ic_round_menu_24"
+        android:title="Trip Menu">
+
+    </item>
+    <item
+        android:id="@+id/addtrip_fragment"
+        android:icon="@drawable/ic_baseline_add_24"
+        android:title="Trip Add">
+
+    </item>
+    <item
+        android:id="@+id/fragment_backup"
+        android:icon="@drawable/ic_outline_cloud_24"
+        android:title="Backup">
+
+    </item>
+
+
+</menu>

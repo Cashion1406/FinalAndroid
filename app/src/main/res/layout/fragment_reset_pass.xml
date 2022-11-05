@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:context=".login.reset_pass">
+
+
+    <TextView
+        android:id="@+id/tv_forgot_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="35sp"
+        android:text="Forgot your password ?"
+        android:textSize="30sp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/tv_forgot_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="50dp"
+        android:elegantTextHeight="true"
+
+        android:gravity="center"
+        android:text="@string/forgot_pass_text"
+        android:textSize="18sp">
+
+    </TextView>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/reset_email"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:orientation="vertical"
+        android:paddingTop="15dp"
+        app:helperText=""
+        app:helperTextTextColor="@android:color/holo_red_dark">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/ed_reset_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email "
+            android:inputType="textEmailAddress"
+
+            >
+
+        </androidx.appcompat.widget.AppCompatEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_reset_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:text=""
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="17sp">
+
+    </TextView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_reset_pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/round_button"
+        android:gravity="center"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:text="Send email"
+
+
+        android:textSize="16sp"
+
+
+        >
+
+    </androidx.appcompat.widget.AppCompatButton>
+
+</LinearLayout>

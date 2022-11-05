@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/register_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:text="Expense"
+        android:textSize="28sp"
+        android:textStyle="bold">
+
+    </TextView>
+
+    <com.google.android.material.textfield.TextInputLayout
+
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="15dp"
+        android:orientation="vertical"
+        android:paddingTop="15dp"
+
+        >
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/ed_add_expense_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Expense type"
+            android:inputType="textEmailAddress"
+
+            app:helperText="Reqiured">
+
+        </androidx.appcompat.widget.AppCompatEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="15dp"
+        android:orientation="vertical"
+        android:paddingTop="15dp"
+
+        >
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/ed_add_expense_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Price"
+            android:inputType="numberDecimal"
+
+
+            >
+
+        </androidx.appcompat.widget.AppCompatEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="15dp"
+        android:orientation="vertical"
+        android:paddingTop="15dp"
+
+        >
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/ed_add_expense_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Date"
+
+            android:inputType="text">
+
+        </androidx.appcompat.widget.AppCompatEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="15dp"
+        android:orientation="vertical"
+        android:paddingTop="15dp"
+
+        >
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/ed_add_expense_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:inputType="textCapSentences|textMultiLine"
+            android:lines="3"
+
+            >
+
+        </androidx.appcompat.widget.AppCompatEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_add_expense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/round_button"
+        android:gravity="center"
+        android:text="Add"
+        android:textSize="17sp"
+
+
+        />
+
+
+</LinearLayout>

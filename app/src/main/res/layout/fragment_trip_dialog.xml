@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/round_trip_detail"
+    android:orientation="vertical"
+    tools:context=".fragments.TripDialog">
+
+    <TextView
+        android:id="@+id/register_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:text="Trip"
+        android:textSize="28sp"
+        android:textStyle="bold">
+
+    </TextView>
+
+    <com.google.android.material.textfield.TextInputLayout
+
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="15dp"
+        android:orientation="vertical"
+        android:paddingTop="15dp">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/ed_edit_trip_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Trip name"
+            android:inputType="textEmailAddress"
+
+            >
+
+        </androidx.appcompat.widget.AppCompatEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="15dp"
+        android:orientation="vertical"
+        android:paddingTop="15dp">
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/ed_edit_trip_destination"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Destination"
+
+
+            >
+
+        </androidx.appcompat.widget.AppCompatEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="15dp"
+        android:orientation="vertical"
+        android:paddingTop="15dp">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/ed_edit_trip_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Date"
+
+            android:inputType="text">
+
+        </androidx.appcompat.widget.AppCompatEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="15dp"
+        android:orientation="vertical"
+        android:paddingTop="15dp"
+
+        >
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/ed_edit_trip_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:inputType="textCapSentences|textMultiLine"
+            android:lines="3"
+
+            >
+
+        </androidx.appcompat.widget.AppCompatEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <LinearLayout
+        android:id="@+id/terms_condition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+
+
+        >
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/cb_edit_trip_risk"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:checked="false"
+
+
+            >
+
+        </androidx.appcompat.widget.AppCompatCheckBox>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_terms_condition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Require Risk Assessetment"
+            android:textSize="14sp">
+
+        </androidx.appcompat.widget.AppCompatTextView>
+
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_cancle_add_trip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-80dp"
+            android:background="@drawable/round_button"
+            android:gravity="center_vertical|center_horizontal"
+
+            android:text="cancle"
+
+
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_update_trip"
+            app:layout_constraintHorizontal_bias="0.697"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0">
+
+        </androidx.appcompat.widget.AppCompatButton>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_update_trip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="80dp"
+            android:background="@drawable/round_button"
+            android:gravity="center"
+
+            android:text="update"
+
+
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+        </androidx.appcompat.widget.AppCompatButton>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

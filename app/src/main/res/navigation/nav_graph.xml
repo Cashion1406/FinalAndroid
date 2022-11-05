@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/dashboard_fragment">
+
+    <fragment
+        android:id="@+id/dashboard_fragment"
+        android:name="com.example.finalandroid.fragments.dashboard_fragment"
+        android:label="Trip Dashboard"
+        tools:layout="@layout/fragment_dashboard_fragment">
+        <action
+            android:id="@+id/action_dashboard_fragment_to_addtrip_fragment"
+            app:destination="@id/addtrip_fragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popEnterAnim="@android:anim/slide_in_left" />
+        <action
+            android:id="@+id/action_dashboard_fragment_to_fragment_backup"
+            app:destination="@id/fragment_backup" />
+        <action
+            android:id="@+id/action_dashboard_fragment_to_edittrip"
+            app:destination="@id/edittrip"
+            app:enterAnim="@anim/custom_slide_left"
+            app:exitAnim="@anim/delay_anim"
+            app:popEnterAnim="@anim/delay_anim"
+            app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_dashboard_fragment_to_userNameDialog"
+            app:destination="@id/userNameDialog" />
+    </fragment>
+    <fragment
+        android:id="@+id/addtrip_fragment"
+        android:name="com.example.finalandroid.fragments.addtrip_fragment"
+        android:label="Add Trip"
+        tools:layout="@layout/fragment_addtrip_fragment">
+        <action
+            android:id="@+id/action_addtrip_fragment_to_dashboard_fragment"
+            app:destination="@id/dashboard_fragment"
+            app:enterAnim="@anim/custom_slide_left"
+            app:popEnterAnim="@anim/custom_slide_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/edittrip"
+        android:name="com.example.finalandroid.fragments.edittrip"
+        android:label="Trip Detail"
+        tools:layout="@layout/fragment_edittrip">
+        <action
+            android:id="@+id/action_edittrip_to_tripDialog"
+            app:destination="@id/tripDialog" />
+        <action
+            android:id="@+id/action_edittrip_to_dashboard_fragment"
+            app:destination="@id/dashboard_fragment" />
+        <action
+            android:id="@+id/action_edittrip_to_expenseDialog"
+            app:destination="@id/expenseDialog" />
+        <argument
+            android:name="currentTrip"
+            app:argType="com.example.finalandroid.DAO.TripModel" />
+        <action
+            android:id="@+id/action_edittrip_to_editExpenseDialog"
+            app:destination="@id/editExpenseDialog" />
+        <action
+            android:id="@+id/action_edittrip_to_expenseChart"
+            app:destination="@id/expenseChart" />
+    </fragment>
+    <dialog
+        android:id="@+id/tripDialog"
+        android:name="com.example.finalandroid.fragments.TripDialog"
+        android:label="fragment_trip_dialog"
+        tools:layout="@layout/fragment_trip_dialog">
+        <argument
+            android:name="tripinfo"
+            app:argType="com.example.finalandroid.DAO.TripModel" />
+        <action
+            android:id="@+id/action_tripDialog_to_edittrip"
+            app:destination="@id/edittrip" />
+        <action
+            android:id="@+id/action_tripDialog_to_dashboard_fragment"
+            app:destination="@id/dashboard_fragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/expenseDialog"
+        android:name="com.example.finalandroid.fragments.ExpenseDialog"
+        android:label="ExpenseDialog">
+        <action
+            android:id="@+id/action_expenseDialog3_to_edittrip"
+            app:destination="@id/edittrip" />
+        <argument
+            android:name="expense_info"
+            app:argType="com.example.finalandroid.DAO.TripModel" />
+    </dialog>
+    <fragment
+        android:id="@+id/fragment_backup"
+        android:name="com.example.finalandroid.fragments.fragment_backup"
+        android:label="Backup Trip"
+        tools:layout="@layout/fragment_backup">
+        <action
+            android:id="@+id/action_fragment_backup_to_dashboard_fragment"
+            app:destination="@id/dashboard_fragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/editExpenseDialog"
+        android:name="com.example.finalandroid.fragments.EditExpenseDialog"
+        android:label="EditExpenseDialog">
+        <argument
+            android:name="currentExpense"
+            app:argType="com.example.finalandroid.DAO.Expense" />
+    </dialog>
+    <fragment
+        android:id="@+id/expenseChart"
+        android:name="com.example.finalandroid.fragments.ExpenseChart"
+        android:label="Expense Bar Chart"
+        tools:layout="@layout/fragment_expense_chart">
+        <argument
+            android:name="currentChartExpense"
+            app:argType="com.example.finalandroid.DAO.TripModel" />
+    </fragment>
+    <dialog
+        android:id="@+id/userNameDialog"
+        android:name="com.example.finalandroid.fragments.UserNameDialog"
+        android:label="UserNameDialog" >
+        <argument
+            android:name="CurrentUserName"
+            app:argType="string"
+            app:nullable="true" />
+    </dialog>
+</navigation>

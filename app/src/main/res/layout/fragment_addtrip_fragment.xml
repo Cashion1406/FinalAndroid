@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragments.addtrip_fragment">
+
+
+    <TextView
+        android:id="@+id/register_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:text="Trip"
+        android:textSize="28sp"
+        android:textStyle="bold">
+
+    </TextView>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+            >
+
+            <RadioGroup
+                android:id="@+id/rg_select"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+
+                android:gravity="center"
+                android:orientation="horizontal"
+
+                >
+
+                <RadioButton
+                    android:id="@+id/rd_plane"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/travel_type_selector"
+                    android:button="@android:color/transparent"
+
+                    android:drawableTop="@drawable/ic_sharp_airplanemode_active_24"
+                    android:padding="10dp"
+                    android:text="Plane"
+                    android:textAlignment="center">
+
+                </RadioButton>
+
+                <RadioButton
+                    android:id="@+id/rd_sea"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/travel_type_selector"
+                    android:button="@android:color/transparent"
+                    android:drawableTop="@drawable/ic_sharp_water_24"
+                    android:padding="10dp"
+                    android:text="Sea"
+                    android:textAlignment="center">
+
+                </RadioButton>
+
+                <RadioButton
+                    android:id="@+id/rd_car"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/travel_type_selector"
+                    android:button="@android:color/transparent"
+                    android:drawableTop="@drawable/ic_outline_directions_car_24"
+                    android:padding="10dp"
+                    android:text="Road"
+                    android:textAlignment="center">
+
+                </RadioButton>
+            </RadioGroup>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/register_email"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:orientation="vertical"
+                android:paddingTop="15dp"
+                app:helperText=""
+                app:helperTextTextColor="@android:color/holo_red_dark">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/ed_add_trip_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Trip name"
+                    android:inputType="textEmailAddress"
+
+                    >
+
+                </androidx.appcompat.widget.AppCompatEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/register_password"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="22dp"
+                android:layout_marginEnd="15dp"
+                android:orientation="vertical"
+                android:paddingTop="15dp"
+                app:helperText=""
+                app:helperTextTextColor="@android:color/holo_red_dark"
+
+                >
+
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/ed_add_trip_destination"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Destination"
+
+
+                    >
+
+                </androidx.appcompat.widget.AppCompatEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/register_firstname"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="22dp"
+                android:layout_marginEnd="15dp"
+                android:orientation="vertical"
+                android:paddingTop="15dp"
+                app:helperText=""
+                app:helperTextTextColor="@android:color/holo_red_dark">
+
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/ed_add_trip_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_outline_calendar_month_24"
+                    android:hint="Date"
+                    android:inputType="text">
+
+                </androidx.appcompat.widget.AppCompatEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/register_lastname"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="22dp"
+                android:layout_marginEnd="15dp"
+                android:orientation="vertical"
+                android:paddingTop="15dp"
+
+                >
+
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/ed_add_trip_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:lines="3"
+
+                    >
+
+                </androidx.appcompat.widget.AppCompatEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <LinearLayout
+                android:id="@+id/terms_condition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+
+
+                >
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/ed_add_trip_risk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+
+                    >
+
+                </androidx.appcompat.widget.AppCompatCheckBox>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_terms_condition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="Require Risk Assessetment"
+                    android:textSize="14sp">
+
+                </androidx.appcompat.widget.AppCompatTextView>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_add_trip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/round_button"
+        android:gravity="center"
+        android:text="Add"
+
+        android:textSize="17sp"
+
+
+        >
+
+    </androidx.appcompat.widget.AppCompatButton>
+</LinearLayout>

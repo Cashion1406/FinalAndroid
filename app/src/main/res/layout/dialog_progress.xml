@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:background="@drawable/bg_white_rounded"
+   >
+    <ProgressBar
+        android:id="@+id/fb_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:indeterminateTint="#d996d9"
+
+        >
+
+    </ProgressBar>
+    <TextView
+        android:id="@+id/tv_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please Waite"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:layout_margin="12dp"
+        >
+
+    </TextView>
+
+</LinearLayout>
