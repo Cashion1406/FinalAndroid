@@ -18,7 +18,6 @@ import com.example.finalandroid.viewmodel.TripViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.android.synthetic.main.fragment_addtrip_fragment.*
 import kotlinx.android.synthetic.main.fragment_expense_dialog.*
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -56,6 +55,15 @@ class addtrip_fragment : Fragment() {
         ed_add_trip_date.setOnClickListener {
             getDateRange()
             //getDate()
+        }
+        rg_select.setOnCheckedChangeListener { rGroup, checkedId ->
+            val radioButtonID: Int = rg_select.checkedRadioButtonId
+            val radioButton: View = rg_select.findViewById(radioButtonID)
+            val idx: Int = rg_select.indexOfChild(radioButton)
+            val r = rg_select.getChildAt(idx) as RadioButton
+            var selectedText = r.text.toString()
+
+            Toast.makeText(requireContext(), selectedText, Toast.LENGTH_SHORT).show()
         }
 
 
@@ -130,16 +138,17 @@ class addtrip_fragment : Fragment() {
 
     private fun addtrip() {
 
+
         val name = ed_add_trip_name.text.toString().trim { it <= ' ' }
         val location = ed_add_trip_destination.text.toString().trim { it <= ' ' }
         val date = ed_add_trip_date.text.toString().trim { it <= ' ' }
         val desc = ed_add_trip_desc.text.toString().trim { it <= ' ' }
 
-
         val radioButtonID = rg_select.checkedRadioButtonId
+        val radioButton = rg_select.findViewById<View>(radioButtonID) as? RadioButton
+        val selectedtext = radioButton?.text as? String
 
-        val radioButton = rg_select.findViewById<View>(radioButtonID) as RadioButton
-        val selectedtext = radioButton.text as String
+
 
         if (name.isNotEmpty() && location.isNotEmpty() && date.isNotEmpty()) {
 
@@ -160,7 +169,8 @@ class addtrip_fragment : Fragment() {
             ed_add_trip_destination.text?.clear()
 
             ed_add_trip_desc.text?.clear()
-            Toast.makeText(requireContext(), "ADDED TRIP", Toast.LENGTH_SHORT).show()
+
+
             val action = addtrip_fragmentDirections.actionAddtripFragmentToDashboardFragment()
             findNavController().navigate(action)
         } else {
@@ -170,6 +180,7 @@ class addtrip_fragment : Fragment() {
 
 
     }
+
 
     private fun getCurrentDate() {
         val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.US)

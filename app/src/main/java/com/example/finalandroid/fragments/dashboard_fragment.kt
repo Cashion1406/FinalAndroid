@@ -46,22 +46,21 @@ class dashboard_fragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         tripviewmode = ViewModelProvider(this)[TripViewModel::class.java]
-/*
 
         val user = FirebaseAuth.getInstance().currentUser
         if (user != null) {
-             Toast.makeText(
-                 requireContext(),
-                 FirebaseAuth.getInstance().currentUser!!.email.toString(),
-                 Toast.LENGTH_SHORT
-             ).show()
-           return
+            Toast.makeText(
+                requireContext(),
+                FirebaseAuth.getInstance().currentUser!!.email.toString(),
+                Toast.LENGTH_SHORT
+            ).show()
+
+            return
 
         } else {
             startActivity(Intent(requireActivity(), WelcomeActivity::class.java))
             requireActivity().finish()
         }
-*/
 
         //loadUser()
     }
@@ -84,7 +83,7 @@ class dashboard_fragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-//        setUser()
+        setUser()
         viewTrip()
 
         img_search.setOnClickListener {
@@ -154,40 +153,8 @@ class dashboard_fragment : Fragment() {
         })
     }
 
-    /*  private fun loadUser() {
 
-          val sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
-
-          val islogin = sharedPreferences.getString("new_UID", "1")
-
-          if (islogin == "1") {
-
-              val getUID = requireActivity().intent.getStringExtra("UID")
-
-              Toast.makeText(requireContext(), getUID.toString(), Toast.LENGTH_SHORT).show()
-              if (getUID != null) {
-
-                  setUser(getUID)
-
-                  sharedPreferences.edit().putString("new_UID", getUID).apply()
-
-              } else {
-                  startActivity(Intent(requireActivity(), WelcomeActivity::class.java))
-                  requireActivity().finish()
-
-              }
-
-          } else {
-
-              setUser(islogin)
-
-
-          }
-
-
-      }*/
-
-   /* fun setUser() {
+    fun setUser() {
         db = FirebaseFirestore.getInstance()
         if (context != null) {
 
@@ -202,7 +169,7 @@ class dashboard_fragment : Fragment() {
 
         }
 
-    }*/
+    }
 
 
     fun viewTrip() {

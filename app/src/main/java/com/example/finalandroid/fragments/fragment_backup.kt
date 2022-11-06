@@ -69,11 +69,8 @@ class fragment_backup : Fragment() {
                 Toast.makeText(requireContext(), "Upload OK", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
-
-
-                    e ->
-                e.printStackTrace()
-                Toast.makeText(requireContext(), "Upload Failed", Toast.LENGTH_SHORT).show()
+                e ->
+                Toast.makeText(requireContext(), e.message.toString(), Toast.LENGTH_SHORT).show()
             }
     }
 

@@ -4,7 +4,10 @@ import android.app.DatePickerDialog
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
+import android.location.Location
+import android.location.LocationProvider
 import android.os.Bundle
+import android.provider.CallLog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +21,8 @@ import androidx.navigation.fragment.navArgs
 import com.example.finalandroid.DAO.Expense
 import com.example.finalandroid.R
 import com.example.finalandroid.viewmodel.ExpenseViewModel
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 
 import kotlinx.android.synthetic.main.fragment_expense_dialog.*
 import java.text.SimpleDateFormat
@@ -30,6 +35,7 @@ class ExpenseDialog : DialogFragment() {
     private val args by navArgs<ExpenseDialogArgs>()
 
     private lateinit var expenseViewModel: ExpenseViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +69,6 @@ class ExpenseDialog : DialogFragment() {
             )
         )
         getCurrentDate()
-
 
         btn_add_expense.setOnClickListener {
 

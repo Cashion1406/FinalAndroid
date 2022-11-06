@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.finalandroid.MainActivity
 import com.example.finalandroid.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.dialog_progress.*
 import kotlinx.android.synthetic.main.fragment_login.*
 
