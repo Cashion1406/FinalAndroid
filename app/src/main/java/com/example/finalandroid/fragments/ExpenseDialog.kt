@@ -10,6 +10,7 @@ import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,7 +67,7 @@ class ExpenseDialog : DialogFragment() {
 
                 for (location: Location in p0.locations) {
 
-
+                    Log.d("map", p0.locations.toString())
                     val geocoder = Geocoder(requireContext(), Locale.getDefault())
                     val address: List<Address> =
                         geocoder.getFromLocation(location.latitude, location.longitude, 1)
@@ -122,7 +123,7 @@ class ExpenseDialog : DialogFragment() {
 
         btn_add_expense.setOnClickListener {
 
-            //addExpense()
+            addExpense()
 
 
         }
@@ -212,26 +213,6 @@ class ExpenseDialog : DialogFragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
-    fun getAddress(latLng: LatLng) {
-        val geocoder = Geocoder(requireContext(), Locale.getDefault())
-        val addresses: List<Address>?
-        val address: Address?
-        var fulladdress = ""
-        addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
-
-        if (addresses.isNotEmpty()) {
-            address = addresses[0]
-            fulladdress =
-                address.getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex
-            var city = address.getLocality();
-            var state = address.getAdminArea();
-            var country = address.getCountryName();
-            var postalCode = address.getPostalCode();
-            var knownName = address.getFeatureName(); // Only if available else return NULL
-        } else {
-            fulladdress = "Location not found"
-        }
-    }
 
     fun checkSettingLocation() {
         val request: LocationSettingsRequest? =
