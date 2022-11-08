@@ -1,6 +1,7 @@
 package com.example.finalandroid.login
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -54,6 +55,8 @@ class login : Fragment() {
             val action = loginDirections.actionLoginToRegister()
             findNavController().navigate(action)
         }
+
+
     }
 
     private fun checkUser() {
@@ -75,6 +78,10 @@ class login : Fragment() {
                     if (task.isSuccessful) {
                         hideProgress()
                         val intent = Intent(requireContext(), MainActivity::class.java)
+
+
+
+
                         intent.putExtra("UID", FirebaseAuth.getInstance().currentUser?.uid)
                         startActivity(intent)
                         requireActivity().finish()

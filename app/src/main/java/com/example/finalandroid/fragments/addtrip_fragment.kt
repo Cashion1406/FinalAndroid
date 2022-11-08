@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.finalandroid.DAO.TripDAO
 import com.example.finalandroid.DAO.TripModel
 import com.example.finalandroid.R
 import com.example.finalandroid.viewmodel.TripViewModel
@@ -56,28 +57,8 @@ class addtrip_fragment : Fragment() {
             getDateRange()
             //getDate()
         }
-        rg_select.setOnCheckedChangeListener { rGroup, checkedId ->
-            val radioButtonID: Int = rg_select.checkedRadioButtonId
-            val radioButton: View = rg_select.findViewById(radioButtonID)
-            val idx: Int = rg_select.indexOfChild(radioButton)
-            val r = rg_select.getChildAt(idx) as RadioButton
-            var selectedText = r.text.toString()
-
-            Toast.makeText(requireContext(), selectedText, Toast.LENGTH_SHORT).show()
-        }
 
 
-    }
-
-
-    fun getRadio() {
-
-
-        val radioGroup = rg_select as RadioGroup
-        val radioButtonID = radioGroup.checkedRadioButtonId
-        val radioButton = radioGroup.findViewById<View>(radioButtonID) as RadioButton
-        val selectedtext = radioButton.text as String
-        Toast.makeText(requireContext(), selectedtext, Toast.LENGTH_SHORT).show()
     }
 
     private fun getDateRange() {
@@ -101,13 +82,6 @@ class addtrip_fragment : Fragment() {
 
 
         }
-    }
-
-    fun convertDate(time: Long): String {
-        val date = Date(time)
-        val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.US)
-
-        return simpleDateFormat.format(date)
     }
 
     fun getDate() {
@@ -170,6 +144,7 @@ class addtrip_fragment : Fragment() {
 
             ed_add_trip_desc.text?.clear()
 
+            Toast.makeText(requireContext(), trip.id.toString(), Toast.LENGTH_SHORT).show()
 
             val action = addtrip_fragmentDirections.actionAddtripFragmentToDashboardFragment()
             findNavController().navigate(action)

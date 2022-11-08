@@ -1,6 +1,7 @@
 package com.example.finalandroid.login
 
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -81,6 +82,17 @@ class register : Fragment() {
                                 task ->
                             if (task.isSuccessful) {
                                 hideProgress()
+                                val sharedPreferences =
+                                    requireActivity().getSharedPreferences(
+                                        "name",
+                                        Context.MODE_PRIVATE
+                                    )
+                                val editor = sharedPreferences.edit()
+                                editor.apply {
+
+                                    putString("name_key", userName)
+                                }.apply()
+
 
                                 val firebaseUser: FirebaseUser = task.result!!.user!!
 

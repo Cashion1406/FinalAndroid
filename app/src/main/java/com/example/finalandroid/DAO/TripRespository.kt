@@ -35,5 +35,9 @@ class TripRespository(val tripDAO: TripDAO) {
 
     }
 
+    fun search(search: String): Flow<List<TripModel>> {
+
+        return tripDAO.getv2(search)
+    }
 
 }

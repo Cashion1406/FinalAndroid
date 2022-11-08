@@ -1,9 +1,11 @@
 package com.example.finalandroid.fragments
 
 import android.animation.LayoutTransition
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,20 +17,24 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.finalandroid.DAO.Expense
 import com.example.finalandroid.DAO.TripModel
 import com.example.finalandroid.MainActivity
 import com.example.finalandroid.R
 import com.example.finalandroid.WelcomeActivity
 import com.example.finalandroid.adapter.tripAdapter
 import com.example.finalandroid.viewmodel.TripViewModel
+import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.model.FieldIndex
+import com.google.type.LatLng
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_dashboard_fragment.*
 import java.util.*
@@ -40,12 +46,10 @@ class dashboard_fragment : Fragment() {
 
     private lateinit var tripviewmode: TripViewModel
 
-    private lateinit var db: FirebaseFirestore
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         tripviewmode = ViewModelProvider(this)[TripViewModel::class.java]
+
 
         val user = FirebaseAuth.getInstance().currentUser
         if (user != null) {
@@ -55,14 +59,12 @@ class dashboard_fragment : Fragment() {
                 Toast.LENGTH_SHORT
             ).show()
 
-            return
 
         } else {
             startActivity(Intent(requireActivity(), WelcomeActivity::class.java))
             requireActivity().finish()
         }
 
-        //loadUser()
     }
 
     override fun onCreateView(
@@ -82,9 +84,9 @@ class dashboard_fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        setUser()
+        loadusername()
         viewTrip()
+
 
         img_search.setOnClickListener {
 
@@ -104,12 +106,7 @@ class dashboard_fragment : Fragment() {
 
             true
         }
-/*
 
-        btn_float.setOnClickListener {
-            findNavController().navigate(R.id.addtrip_fragment)
-
-        }*/
         tv_user_name.setOnLongClickListener {
 
             click()
@@ -118,10 +115,7 @@ class dashboard_fragment : Fragment() {
         }
         tv_user_name.setOnClickListener {
 
-            /*  val action =
-                  dashboard_fragmentDirections.actionDashboardFragmentToUserNameDialog(tv_user_name.text.toString())
 
-              findNavController().navigate(action)*/
             val sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
             Toast.makeText(
                 requireContext(),
@@ -146,28 +140,24 @@ class dashboard_fragment : Fragment() {
 
             override fun onQueryTextChange(newText: String): Boolean {
 
+
                 filterlist(newText)
+
+
 
                 return true
             }
         })
     }
 
+    private fun loadusername() {
+        val sharedPreferences =
+            requireActivity().getSharedPreferences(
+                "name",
+                Context.MODE_PRIVATE
+            )
+        tv_user_name.text = sharedPreferences.getString("name_key", null)
 
-    fun setUser() {
-        db = FirebaseFirestore.getInstance()
-        if (context != null) {
-
-            db.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid).get()
-                .addOnSuccessListener {
-
-                        task ->
-
-                    tv_user_name.text = task.get("Name").toString()
-                }
-
-
-        }
 
     }
 
@@ -225,11 +215,11 @@ class dashboard_fragment : Fragment() {
                         ).show()
                         Snackbar.make(rv_trip, "Delete " + tripos.name, Snackbar.LENGTH_LONG)
                             .setAction(
-                                "Undo", View.OnClickListener {
-                                    tripviewmode.addtrip(tripos)
+                                "Undo"
+                            ) {
+                                tripviewmode.addtrip(tripos)
 
-                                }
-                            ).show()
+                            }.show()
                     }
 
                 }).attachToRecyclerView(rv_trip)
@@ -246,7 +236,7 @@ class dashboard_fragment : Fragment() {
 
 
     fun filterlist(text: String) {
-        tripAdapter = tripAdapter()
+
 
         val fillist: ArrayList<TripModel> = ArrayList()
 
@@ -256,7 +246,9 @@ class dashboard_fragment : Fragment() {
 
             for (t in trip) {
 
-                if (t.name.lowercase(Locale.ROOT).contains(text.lowercase(Locale.ROOT))
+                if (t.name.lowercase(Locale.ROOT)
+                        .contains(text.lowercase(Locale.ROOT)) || t.destination.lowercase(Locale.ROOT)
+                        .contains(text.lowercase(Locale.ROOT))
 
                 ) {
                     fillist.add(t)
@@ -274,9 +266,9 @@ class dashboard_fragment : Fragment() {
                 tv_no_trip_text.visibility = View.GONE
             }
 
+            tripAdapter.setTrip(fillist)
         }
 
-        tripAdapter.setTrip(fillist)
 
     }
 

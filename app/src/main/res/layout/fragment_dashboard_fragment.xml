@@ -94,35 +94,61 @@
 
     </LinearLayout>
 
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_ground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/layout_ok"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_user">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_trip"
+    </com.google.android.material.chip.ChipGroup>
+
+    <LinearLayout
+        android:id="@+id/layout_ok"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        android:visibility="visible"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_user"
-        tools:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/chip_ground">
 
-        />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_trip"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
 
-    <TextView
-        android:id="@+id/tv_no_trip_text"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        android:gravity="top|center"
-        android:text="No Trip available!!!"
-        android:textSize="18sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_user"
-        tools:visibility="visible" />
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user"
+            tools:visibility="gone"
+
+            />
+
+        <TextView
+            android:id="@+id/tv_no_trip_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:gravity="top|center"
+            android:text="No Trip available!!!"
+            android:textSize="18sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user"
+            tools:visibility="visible" />
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

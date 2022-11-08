@@ -6,6 +6,7 @@ import com.example.finalandroid.DAO.TripDB
 import com.example.finalandroid.DAO.TripModel
 import com.example.finalandroid.DAO.TripRespository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 
@@ -67,6 +68,12 @@ class TripViewModel(application: Application) : AndroidViewModel(application) {
     fun getalltrip(): LiveData<List<TripModel>> {
         return tripList
     }
+
+    fun search(search: String): LiveData<List<TripModel>> {
+
+        return respository.search(search).asLiveData()
+    }
+
 
 
 }

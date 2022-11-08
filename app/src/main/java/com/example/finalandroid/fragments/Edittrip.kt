@@ -84,7 +84,6 @@ class edittrip : Fragment() {
 
         open_expense.setOnClickListener {
             val action = edittripDirections.actionEdittripToExpenseDialog(args.currentTrip)
-            // Toast.makeText(requireContext(), args.currentTrip.id.toString(), Toast.LENGTH_SHORT).show()
             findNavController().navigate(action)
         }
 
@@ -168,7 +167,7 @@ class edittrip : Fragment() {
 
             }
 
-            expense_barchart.setNoDataText("No Data Available");
+            expense_barchart.setNoDataText("No Expense Data Available");
             val paint: Paint = expense_barchart.getPaint(Chart.PAINT_INFO)
             paint.textSize = 70f
             paint.color = resources.getColor(R.color.very_purple)

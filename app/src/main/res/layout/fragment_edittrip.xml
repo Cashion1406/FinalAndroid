@@ -12,6 +12,8 @@
 
 
     <LinearLayout
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -41,6 +43,8 @@
     </LinearLayout>
 
     <LinearLayout
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"

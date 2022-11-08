@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:minWidth="1000dp"
     android:minHeight="450dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:focusableInTouchMode="true">
 
 
     <TextView

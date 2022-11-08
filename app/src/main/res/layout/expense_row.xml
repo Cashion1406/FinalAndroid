@@ -18,7 +18,8 @@
         app:contentPadding="10dp">
 
         <LinearLayout
-
+            android:paddingStart="3dp"
+            android:paddingEnd="3dp"
             android:id="@+id/tv_top"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

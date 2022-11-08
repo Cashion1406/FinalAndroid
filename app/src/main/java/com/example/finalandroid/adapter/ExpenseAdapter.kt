@@ -57,7 +57,7 @@ class ExpenseAdapter :
         holder.itemView.tv_top.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
 
 
-        holder.itemView.expense_name.setOnClickListener {
+        holder.itemView.setOnClickListener {
 
             val v =
                 if (holder.itemView.tv_bottom.visibility == View.GONE) View.VISIBLE else View.GONE
