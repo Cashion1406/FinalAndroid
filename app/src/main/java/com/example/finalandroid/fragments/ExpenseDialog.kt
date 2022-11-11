@@ -3,14 +3,16 @@ package com.example.finalandroid.fragments
 
 import android.Manifest
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
-import android.util.Log
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,18 +20,24 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
+import com.example.finalandroid.BuildConfig
 import com.example.finalandroid.DAO.Expense
 import com.example.finalandroid.R
 import com.example.finalandroid.viewmodel.ExpenseViewModel
+import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.tasks.Task
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.single.PermissionListener
 import kotlinx.android.synthetic.main.fragment_expense_dialog.*
-import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -42,54 +50,89 @@ class ExpenseDialog : DialogFragment() {
     private lateinit var expenseViewModel: ExpenseViewModel
 
 
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private val REQUEST_CHECK_SETTING = 100
+    private val UPDATE_INTERVAL: Long = 5000
+    private val UPDATE_FASTEST: Long = 1000
 
-    private var mCurrentLocation: Location? = null
+
+    private lateinit var mFusedLocationClient: FusedLocationProviderClient
+    private var mSettingClient: SettingsClient? = null
     private var mLocationRequest: LocationRequest? = null
-
-    private lateinit var locationCallback: LocationCallback
+    private var mLocationSettingRequest: LocationSettingsRequest? = null
+    private var mLocationCallback: LocationCallback? = null
+    private var mCurrentLocation: Location? = null
+    private var geocoder: Geocoder? = null
+    private var mRequestionLocationUPdate = false
+    private var address: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fusedLocationProviderClient =
-            LocationServices.getFusedLocationProviderClient(requireActivity())
-        mLocationRequest = LocationRequest.create().apply {
-            interval = 4000
-            fastestInterval = 2000
-            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            maxWaitTime = 100
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        mSettingClient = LocationServices.getSettingsClient(requireContext())
+        mLocationCallback = object : LocationCallback() {
+            override fun onLocationResult(p0: LocationResult) {
+                super.onLocationResult(p0)
+
+                mCurrentLocation = p0.lastLocation!!
+
+
+                geocoder = Geocoder(requireContext(), Locale.getDefault())
+                val addresses: List<Address> = geocoder!!.getFromLocation(
+                    mCurrentLocation!!.latitude,
+                    mCurrentLocation!!.longitude, 1
+                )
+
+                val location =
+                    "Location :" + addresses[0].adminArea.toString() + "\n" + addresses[0].getAddressLine(
+                        0
+                    )
+
+                address = location
+
+                ed_add_expense_desc.setText(
+                    "Location :" + addresses[0].adminArea.toString() + "\n" + addresses[0].getAddressLine(
+                        0
+                    ).toString()
+                )
+
+            }
+
         }
 
-        locationCallback = object : LocationCallback() {
+        mLocationRequest =
+            LocationRequest.create().setInterval(UPDATE_INTERVAL).setFastestInterval(UPDATE_FASTEST)
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
 
-            override fun onLocationResult(p0: LocationResult) {
+        val builder: LocationSettingsRequest.Builder = LocationSettingsRequest.Builder()
 
+        builder.addLocationRequest(mLocationRequest!!)
+        mLocationSettingRequest = builder.build()
 
-                for (location: Location in p0.locations) {
+        Dexter.withContext(requireContext())
+            .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+            .withListener(object : PermissionListener {
+                override fun onPermissionGranted(p0: PermissionGrantedResponse?) {
+                    mRequestionLocationUPdate = true
+                    Toast.makeText(requireContext(), "LOcation Start", Toast.LENGTH_SHORT).show()
+                    startlocate()
+                }
 
-                    Log.d("map", p0.locations.toString())
-                    val geocoder = Geocoder(requireContext(), Locale.getDefault())
-                    val address: List<Address> =
-                        geocoder.getFromLocation(location.latitude, location.longitude, 1)
-
-                    if (address.isNotEmpty()) {
-                        val country = address[0].adminArea
-                        val city = address[0].getAddressLine(0)
-
-                        ed_city_name.setText(city?.toString())
-                        ed_country_name.setText(country?.toString())
-
-
-                    } else {
-
-                        Toast.makeText(requireContext(), "CANT FETCH LCOATION ", Toast.LENGTH_SHORT)
-                            .show()
+                override fun onPermissionDenied(p0: PermissionDeniedResponse?) {
+                    if (p0 != null) {
+                        if (p0.isPermanentlyDenied) {
+                            openSetting()
+                        }
                     }
                 }
 
-            }
-        }
-
+                override fun onPermissionRationaleShouldBeShown(
+                    p0: PermissionRequest?,
+                    p1: PermissionToken?
+                ) {
+                    p1?.continuePermissionRequest()
+                }
+            }).check()
     }
 
     override fun onCreateView(
@@ -106,7 +149,7 @@ class ExpenseDialog : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        checkSettingLocation()
+
         expenseViewModel = ViewModelProvider(requireActivity())[ExpenseViewModel::class.java]
 
         dialog!!.window!!.setLayout(
@@ -135,150 +178,97 @@ class ExpenseDialog : DialogFragment() {
 
     }
 
-    private fun getlocation() {
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
+    fun openSetting() {
 
-            getlocationPermission()
-            return
-        }
+        val intent = Intent().setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        val uri = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
+        intent.data = uri
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
 
+    }
 
+    fun startlocate() {
+        mLocationSettingRequest?.let {
+            mSettingClient?.checkLocationSettings(it)?.addOnSuccessListener {
+                if (ActivityCompat.checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
 
-        fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
-
-
-            val geocoder = Geocoder(requireContext(), Locale.getDefault())
-
-            try {
-                val address: List<Address> =
-                    geocoder.getFromLocation(location.latitude, location.longitude, 1)
-
-                if (address.isNotEmpty()) {
-                    val country = address[0].adminArea
-                    val city = address[0].getAddressLine(0)
-
-                    ed_city_name.setText(city?.toString())
-                    ed_country_name.setText(country?.toString())
-
-
-                } else {
-
-                    Toast.makeText(requireContext(), "CANT FETCH LCOATION ", Toast.LENGTH_SHORT)
-                        .show()
+                    return@addOnSuccessListener
                 }
-            } catch (e: IOException) {
-                Toast.makeText(requireContext(), "Unable connect to Geocoder", Toast.LENGTH_LONG)
-                    .show()
+                mFusedLocationClient.requestLocationUpdates(
+                    mLocationRequest!!, mLocationCallback!!,
+                    Looper.getMainLooper()
+                )
 
             }
+                ?.addOnFailureListener {
+
+                    val status: Int = (it as ApiException).statusCode
+
+                    when (status) {
+
+                        LocationSettingsStatusCodes.RESOLUTION_REQUIRED ->
+                            try {
+                                val rea = it as ResolvableApiException
+                                rea.startResolutionForResult(
+                                    requireActivity(),
+                                    REQUEST_CHECK_SETTING
+                                )
+                            } catch (e: IntentSender.SendIntentException) {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "PENDING REQUEST CANT EXECUTE",
+                                    Toast.LENGTH_SHORT
+                                ).show()
 
 
-        }
-    }
+                            }
 
-
-    private fun getlocationPermission() {
-        ActivityCompat.requestPermissions(
-            requireActivity(),
-            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-            100
-        )
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-
-        if (requestCode == 100) {
-
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                //getlocation()
-                checkSettingLocation()
-            } else {
-
-                Toast.makeText(requireContext(), "FUK NO LocATION FOR U ", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
-
-
-    fun checkSettingLocation() {
-        val request: LocationSettingsRequest? =
-            mLocationRequest?.let {
-                LocationSettingsRequest.Builder().addLocationRequest(it).build()
-            }
-
-        val client: SettingsClient = LocationServices.getSettingsClient(requireContext())
-
-        val locationSettingRepsone: Task<LocationSettingsResponse> =
-            request?.let { client.checkLocationSettings(it) } as Task<LocationSettingsResponse>
-
-        locationSettingRepsone.addOnSuccessListener {
-
-            startLocation()
-        }
-        locationSettingRepsone.addOnFailureListener {
-
-                it ->
-            if (it is ResolvableApiException) {
-                // Location settings are not satisfied, but this can be fixed
-                // by showing the user a dialog.
-                try {
-                    // Show the dialog by calling startResolutionForResult(),
-                    // and check the result in onActivityResult().
-                    it.startResolutionForResult(
-                        requireActivity(),
-                        100
-                    )
-                } catch (sendEx: IntentSender.SendIntentException) {
-                    // Ignore the error.
+                        LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE ->
+                            Toast.makeText(
+                                requireContext(),
+                                "LOCATION SETTING BROKEN",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                    }
                 }
-            }
-
-
         }
     }
 
+    fun stoplocate() {
+        mFusedLocationClient.removeLocationUpdates(mLocationCallback!!)
+        Toast.makeText(requireContext(), "LOcation Stop", Toast.LENGTH_SHORT).show()
+    }
 
-    fun startLocation() {
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return
-        }
-        fusedLocationProviderClient.requestLocationUpdates(
-            mLocationRequest!!, locationCallback,
-            Looper.getMainLooper()
+    fun checkPER(): Boolean {
+
+        val permissionState = ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_FINE_LOCATION
         )
-
+        return permissionState == PackageManager.PERMISSION_GRANTED
     }
 
-    fun stopLocation() {
-        fusedLocationProviderClient.removeLocationUpdates(locationCallback)
+    override fun onResume() {
+        super.onResume()
+        if (mRequestionLocationUPdate && checkPER()) {
+            startlocate()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (mRequestionLocationUPdate) {
+
+            stoplocate()
+        }
     }
 
 
@@ -347,11 +337,6 @@ class ExpenseDialog : DialogFragment() {
 
         datepicker.show()
 
-    }
-
-    override fun onStop() {
-        super.onStop()
-        stopLocation()
     }
 
 }

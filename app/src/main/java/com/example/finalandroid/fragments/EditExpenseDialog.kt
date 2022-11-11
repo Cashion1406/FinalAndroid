@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.DialogFragment
@@ -13,7 +12,6 @@ import androidx.navigation.fragment.navArgs
 import com.example.finalandroid.DAO.Expense
 import com.example.finalandroid.R
 import com.example.finalandroid.viewmodel.ExpenseViewModel
-import com.example.finalandroid.viewmodel.TripViewModel
 import kotlinx.android.synthetic.main.fragment_edit_expense_diaglog.*
 
 class EditExpenseDialog : DialogFragment() {

@@ -1,44 +1,32 @@
 package com.example.finalandroid.fragments
 
 import android.animation.LayoutTransition
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.finalandroid.DAO.Expense
 import com.example.finalandroid.DAO.TripModel
 import com.example.finalandroid.MainActivity
 import com.example.finalandroid.R
 import com.example.finalandroid.WelcomeActivity
 import com.example.finalandroid.adapter.tripAdapter
 import com.example.finalandroid.viewmodel.TripViewModel
-import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.model.FieldIndex
-import com.google.type.LatLng
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_dashboard_fragment.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class dashboard_fragment : Fragment() {
@@ -49,7 +37,7 @@ class dashboard_fragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         tripviewmode = ViewModelProvider(this)[TripViewModel::class.java]
-
+        tripAdapter = tripAdapter()
 
         val user = FirebaseAuth.getInstance().currentUser
         if (user != null) {
@@ -171,7 +159,7 @@ class dashboard_fragment : Fragment() {
                 tv_no_trip_text.visibility = View.GONE
 
 
-                tripAdapter = tripAdapter()
+
                 rv_trip.adapter = tripAdapter
                 rv_trip.layoutManager = LinearLayoutManager(requireContext())
                 val divider = DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)

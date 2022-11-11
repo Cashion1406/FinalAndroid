@@ -16,8 +16,7 @@ data class TripModel(
     val date: String,
     val description: String,
     val riskmanagement: String,
-    val transpotation: String?=null
+    val transpotation: String?
 
 
-
-    ) : Parcelable
+) : Parcelable

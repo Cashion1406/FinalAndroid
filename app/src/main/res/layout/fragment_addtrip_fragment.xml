@@ -133,7 +133,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Destination"
-
+                    android:imeOptions="actionGo"
+                    android:inputType="text"
 
                     >
 
@@ -185,7 +186,6 @@
                     android:id="@+id/ed_add_trip_desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:inputType="textCapSentences|textMultiLine"
                     android:lines="3"
 

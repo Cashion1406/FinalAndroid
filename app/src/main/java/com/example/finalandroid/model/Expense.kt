@@ -29,4 +29,5 @@ class Expense(
     val trip_id: Int
 
 
-    ) : Parcelable
+
+) : Parcelable

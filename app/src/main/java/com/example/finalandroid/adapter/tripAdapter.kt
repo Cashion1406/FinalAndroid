@@ -1,21 +1,14 @@
 package com.example.finalandroid.adapter
 
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalandroid.DAO.TripModel
 import com.example.finalandroid.R
 import com.example.finalandroid.fragments.dashboard_fragmentDirections
-import com.example.finalandroid.viewmodel.TripViewModel
 import kotlinx.android.synthetic.main.trip_row.view.*
 
 
@@ -38,10 +31,10 @@ class tripAdapter :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = trips[position]
+
         holder.tvName.text = item.name
 
         holder.tvDate.text = item.date
-        /*holder.expense.text= item.expenseID.toString()*/
 
         if (item.riskmanagement == "true") {
             holder.cbRisk.isChecked = true

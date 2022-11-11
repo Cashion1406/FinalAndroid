@@ -2,23 +2,22 @@ package com.example.finalandroid.fragments
 
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.RadioButton
-import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.finalandroid.DAO.TripDAO
 import com.example.finalandroid.DAO.TripModel
 import com.example.finalandroid.R
 import com.example.finalandroid.viewmodel.TripViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.android.synthetic.main.fragment_addtrip_fragment.*
-import kotlinx.android.synthetic.main.fragment_expense_dialog.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -31,6 +30,7 @@ class addtrip_fragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         tripviewmode = ViewModelProvider(this)[TripViewModel::class.java]
+
 
     }
 
@@ -45,6 +45,8 @@ class addtrip_fragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
         tripNameFocus()
         tripDestionationFocus()
 
@@ -55,7 +57,6 @@ class addtrip_fragment : Fragment() {
         }
         ed_add_trip_date.setOnClickListener {
             getDateRange()
-            //getDate()
         }
 
 
@@ -148,6 +149,7 @@ class addtrip_fragment : Fragment() {
 
             val action = addtrip_fragmentDirections.actionAddtripFragmentToDashboardFragment()
             findNavController().navigate(action)
+            view?.hideKeyboard()
         } else {
 
             Toast.makeText(requireContext(), "SHITY INPUT", Toast.LENGTH_SHORT).show()
@@ -202,8 +204,13 @@ class addtrip_fragment : Fragment() {
 
             return "Empty Destination"
         }
-
         return null
+    }
+
+
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 
 

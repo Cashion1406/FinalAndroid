@@ -10,7 +10,11 @@
         android:label="login" >
         <action
             android:id="@+id/action_login_to_register"
-            app:destination="@id/register" />
+            app:destination="@id/register"
+            app:enterAnim="@anim/custom_slide_left"
+            app:exitAnim="@anim/custom_slide_right"
+            app:popEnterAnim="@anim/custom_slide_left"
+            app:popExitAnim="@anim/custom_slide_right" />
         <action
             android:id="@+id/action_login_to_reset_pass"
             app:destination="@id/reset_pass"
