@@ -26,8 +26,8 @@ class Expense(
     val expense_price: Double,
     val expense_time: String,
     val expense_desc: String,
-    val trip_id: Int
-
+    val trip_id: Int,
+    val location: String?
 
 
 ) : Parcelable

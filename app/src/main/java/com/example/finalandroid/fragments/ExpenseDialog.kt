@@ -65,6 +65,7 @@ class ExpenseDialog : DialogFragment() {
     private var mRequestionLocationUPdate = false
     private var address: String? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -84,17 +85,12 @@ class ExpenseDialog : DialogFragment() {
                 )
 
                 val location =
-                    "Location :" + addresses[0].adminArea.toString() + "\n" + addresses[0].getAddressLine(
+                    addresses[0].adminArea.toString() + "\n" + addresses[0].getAddressLine(
                         0
                     )
 
                 address = location
 
-                ed_add_expense_desc.setText(
-                    "Location :" + addresses[0].adminArea.toString() + "\n" + addresses[0].getAddressLine(
-                        0
-                    ).toString()
-                )
 
             }
 
@@ -285,14 +281,24 @@ class ExpenseDialog : DialogFragment() {
         val name = ed_add_expense_name.text.toString().trim { it <= ' ' }
         val price = ed_add_expense_price.text.toString().trim { it <= ' ' }
         val date = ed_add_expense_date.text.toString().trim { it <= ' ' }
-        val desc = ed_add_expense_desc.text.toString().trim { it <= ' ' }
+        var desc = ed_add_expense_desc.text.toString().trim { it <= ' ' }
         val trip_id = args.expenseInfo.id
+        var location: String? = null
+        if (address != null && desc.isEmpty()) {
+
+            location = address.toString()
+            desc = location.toString()
+        } else if (address == null) {
+
+            location = "Location Unavailable"
+            desc = location
+        }
 
 
-        if (name.isNotEmpty() && price.isNotEmpty() && date.isNotEmpty() && desc.isNotEmpty()) {
+        if (name.isNotEmpty() && price.isNotEmpty() && date.isNotEmpty()) {
 
             val expense =
-                Expense(0, name, price.toDouble(), date, desc, trip_id)
+                Expense(0, name, price.toDouble(), date, desc, trip_id, location)
 
             expenseViewModel.addExpense(expense)
             ed_add_expense_name.text?.clear()
@@ -304,7 +310,8 @@ class ExpenseDialog : DialogFragment() {
 
         } else {
 
-            Toast.makeText(requireContext(), "SHITY INPUT", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Please fill essential detail", Toast.LENGTH_SHORT)
+                .show()
         }
 
 

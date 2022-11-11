@@ -12,8 +12,19 @@ interface TripDAO {
     @Insert
     fun insert(trip: TripModel)
 
-    @Update
-    fun update(trip: TripModel)
+    @Update(entity = TripModel::class)
+    fun update(trip: TripUpdate)
+
+    @Entity
+    class TripUpdate(
+        val id: Int,
+        val name: String,
+        val destination: String,
+        val date: String,
+        val description: String,
+        val riskmanagement: String
+
+    )
 
     @Delete
     fun delete(trip: TripModel)
@@ -28,6 +39,6 @@ interface TripDAO {
     fun gettrip(tripId: Int): LiveData<TripModel>
 
     @Query("SELECT * FROM trip_table WHERE name LIKE :quer")
-    fun getv2 (quer:String): Flow<List<TripModel>>
+    fun getv2(quer: String): Flow<List<TripModel>>
 
 }

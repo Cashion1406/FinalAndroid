@@ -10,6 +10,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.example.finalandroid.DAO.Expense
+import com.example.finalandroid.DAO.ExpenseDAO
 import com.example.finalandroid.R
 import com.example.finalandroid.viewmodel.ExpenseViewModel
 import kotlinx.android.synthetic.main.fragment_edit_expense_diaglog.*
@@ -77,7 +78,7 @@ class EditExpenseDialog : DialogFragment() {
 
         if (name.isNotEmpty() && date.isNotEmpty() && date.isNotEmpty()) {
 
-            val updateExpense = Expense(
+            val expenseUpdate = ExpenseDAO.ExpenseUpdate(
                 args.currentExpense.expense_id,
                 name,
                 price.toDouble(),
@@ -85,9 +86,10 @@ class EditExpenseDialog : DialogFragment() {
                 descrip,
                 tripid
 
-            )
 
-            expenseViewModel.updateExpense(updateExpense)
+            )
+            expenseViewModel.realUpdateExpense(expenseUpdate)
+
             Toast.makeText(requireContext(), "Updated successfully.", Toast.LENGTH_SHORT).show()
             dialog!!.dismiss()
 

@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.fragment.navArgs
+import com.example.finalandroid.DAO.TripDAO
 import com.example.finalandroid.DAO.TripModel
 import com.example.finalandroid.R
 import com.example.finalandroid.adapter.tripAdapter
@@ -52,7 +53,7 @@ class TripDialog : DialogFragment() {
 
 
         dialog!!.window!!.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT + 900,
+            WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
         dialog!!.window!!.setBackgroundDrawable(
@@ -99,14 +100,13 @@ class TripDialog : DialogFragment() {
 
         if (name.isNotEmpty() && location.isNotEmpty() && date.isNotEmpty()) {
 
-            val updatetrip = TripModel(
+            val updatetrip = TripDAO.TripUpdate(
                 args.tripinfo.id,
                 name,
                 location,
                 date,
                 descripp,
-                risk,
-                null
+                risk
             )
 
             tripviewmode.updatetrip(updatetrip)

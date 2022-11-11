@@ -10,8 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.math.exp
 
-class ExpenseViewModel(application: Application): AndroidViewModel(application) {
-
+class ExpenseViewModel(application: Application) : AndroidViewModel(application) {
 
 
     private val respository: ExpenseRespository
@@ -22,7 +21,8 @@ class ExpenseViewModel(application: Application): AndroidViewModel(application) 
 
 
     }
-    fun addExpense(expense: Expense ) {
+
+    fun addExpense(expense: Expense) {
         viewModelScope.launch(Dispatchers.IO) {
             respository.addExpense(expense)
 
@@ -39,20 +39,21 @@ class ExpenseViewModel(application: Application): AndroidViewModel(application) 
 
     }
 
-    fun updateExpense(expense: Expense){
+
+    fun realUpdateExpense(expenseUpdate: ExpenseDAO.ExpenseUpdate) {
+
         viewModelScope.launch(Dispatchers.IO) {
 
-            respository.updateExpense(expense)
+            respository.realExpenseUpdate(expenseUpdate)
         }
-
     }
 
-    fun getExpense(trip_id:Int):LiveData<List<Expense>>{
+    fun getExpense(trip_id: Int): LiveData<List<Expense>> {
 
-        return  respository.getAllExpense(trip_id).asLiveData()
+        return respository.getAllExpense(trip_id).asLiveData()
     }
 
-    fun getallExpense():LiveData<List<Expense>>{
+    fun getallExpense(): LiveData<List<Expense>> {
 
         return respository.getexpensev2()
     }

@@ -11,13 +11,13 @@ class TripRespository(val tripDAO: TripDAO) {
     //fetch all trip data
     val fetchAllTrip: LiveData<List<TripModel>> = tripDAO.getAlltrip()
 
-    suspend fun addtrip(tripModel: TripModel) {
+    fun addtrip(tripModel: TripModel) {
         tripDAO.insert(tripModel)
 
     }
 
-    suspend fun updatetrip(tripModel: TripModel) {
-        return tripDAO.update(tripModel)
+    fun updatetrip(tripUpdate: TripDAO.TripUpdate) {
+        return tripDAO.update(tripUpdate)
 
     }
 
@@ -25,12 +25,12 @@ class TripRespository(val tripDAO: TripDAO) {
         return tripDAO.gettrip(trip_id)
     }
 
-    suspend fun delete(tripModel: TripModel) {
+    fun delete(tripModel: TripModel) {
         tripDAO.delete(tripModel)
 
     }
 
-    suspend fun deleteAll() {
+    fun deleteAll() {
         tripDAO.deleteALL()
 
     }

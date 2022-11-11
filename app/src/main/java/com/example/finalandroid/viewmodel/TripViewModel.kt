@@ -2,6 +2,7 @@ package com.example.finalandroid.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.example.finalandroid.DAO.TripDAO
 import com.example.finalandroid.DAO.TripDB
 import com.example.finalandroid.DAO.TripModel
 import com.example.finalandroid.DAO.TripRespository
@@ -40,10 +41,10 @@ class TripViewModel(application: Application) : AndroidViewModel(application) {
 
     }
 
-    fun updatetrip(tripModel: TripModel) {
+    fun updatetrip(tripUpdate: TripDAO.TripUpdate) {
 
         viewModelScope.launch(Dispatchers.IO) {
-            respository.updatetrip(tripModel)
+            respository.updatetrip(tripUpdate)
         }
 
     }
@@ -73,7 +74,6 @@ class TripViewModel(application: Application) : AndroidViewModel(application) {
 
         return respository.search(search).asLiveData()
     }
-
 
 
 }
