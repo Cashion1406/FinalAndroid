@@ -1,16 +1,19 @@
 package com.example.finalandroid.fragments
 
 import android.animation.LayoutTransition
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -25,6 +28,8 @@ import com.example.finalandroid.adapter.tripAdapter
 import com.example.finalandroid.viewmodel.TripViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.alert_dialog.*
 import kotlinx.android.synthetic.main.fragment_dashboard_fragment.*
 import java.util.*
 
@@ -33,14 +38,18 @@ class dashboard_fragment : Fragment() {
     private lateinit var tripAdapter: tripAdapter
 
     private lateinit var tripviewmode: TripViewModel
+    private lateinit var db: FirebaseFirestore
+    private var user_name: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         tripviewmode = ViewModelProvider(this)[TripViewModel::class.java]
         tripAdapter = tripAdapter()
 
         val user = FirebaseAuth.getInstance().currentUser
         if (user != null) {
+
             Toast.makeText(
                 requireContext(),
                 FirebaseAuth.getInstance().currentUser!!.email.toString(),
@@ -52,6 +61,7 @@ class dashboard_fragment : Fragment() {
             startActivity(Intent(requireActivity(), WelcomeActivity::class.java))
             requireActivity().finish()
         }
+
 
     }
 
@@ -104,21 +114,21 @@ class dashboard_fragment : Fragment() {
         tv_user_name.setOnClickListener {
 
 
-            val sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
-            Toast.makeText(
-                requireContext(),
-                FirebaseAuth.getInstance().currentUser!!.uid,
-                Toast.LENGTH_SHORT
-            ).show()
+            val sharedPreferences =
+                requireActivity().getSharedPreferences("name", Context.MODE_PRIVATE)
 
+            sharedPreferences.edit().clear().apply()
+            user_name = null
+            Toast.makeText(requireContext(), user_name.toString(), Toast.LENGTH_SHORT).show()
 
             FirebaseAuth.getInstance().signOut()
-            sharedPreferences.edit().remove("new_UID").apply()
+
 
             startActivity(Intent(requireActivity(), WelcomeActivity::class.java))
             requireActivity().finish()
 
         }
+
 
         sv_trip.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -139,12 +149,38 @@ class dashboard_fragment : Fragment() {
     }
 
     private fun loadusername() {
+        db = FirebaseFirestore.getInstance()
         val sharedPreferences =
             requireActivity().getSharedPreferences(
                 "name",
                 Context.MODE_PRIVATE
             )
-        tv_user_name.text = sharedPreferences.getString("name_key", null)
+        if (sharedPreferences.contains("name_key")) {
+            Toast.makeText(requireContext(), "NO Firebase", Toast.LENGTH_SHORT).show()
+            tv_user_name.text = sharedPreferences.getString("name_key", null)
+
+        } else {
+
+
+            if (user_name == null) {
+                if (context != null) {
+                    db.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid)
+                        .get()
+                        .addOnSuccessListener { task ->
+                            Toast.makeText(requireContext(), "Yes Firebase", Toast.LENGTH_SHORT)
+                                .show()
+
+                            user_name = task.get("Name").toString()
+                            tv_user_name.text = user_name
+                        }
+                }
+
+            } else {
+                tv_user_name.text = user_name
+            }
+
+
+        }
 
 
     }
@@ -262,25 +298,23 @@ class dashboard_fragment : Fragment() {
 
 
     fun click() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setMessage("U SURE MATE ?")
-        builder.setTitle("RESET ALL")
-        builder.setIcon(R.drawable.ic_launcher_foreground)
-        builder.setPositiveButton("Yes") { dialogInterface, which ->
-            tripviewmode.deleteAll()
-            dialogInterface.dismiss()
 
-        }
+        val alertDialog = Dialog(requireContext())
 
-        builder.setNegativeButton("No") { lmao, which ->
+        alertDialog.setContentView(R.layout.alert_dialog)
+        alertDialog.window?.setBackgroundDrawableResource(R.drawable.bg_white_rounded)
 
-            lmao.dismiss()
 
-        }
-        val alertDialog: AlertDialog = builder.create()
-        alertDialog.setCancelable(false)
         alertDialog.show()
+        alertDialog.tv_no_backup.setOnClickListener {
+            tripviewmode.deleteAll()
+            alertDialog.dismiss()
+        }
 
+        alertDialog.tv_backup.setOnClickListener {
+
+            alertDialog.dismiss()
+        }
 
     }
 

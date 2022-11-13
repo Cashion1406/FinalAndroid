@@ -41,6 +41,7 @@ class TripViewModel(application: Application) : AndroidViewModel(application) {
 
     }
 
+
     fun updatetrip(tripUpdate: TripDAO.TripUpdate) {
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -65,6 +66,7 @@ class TripViewModel(application: Application) : AndroidViewModel(application) {
 
 
     }
+
 
     fun getalltrip(): LiveData<List<TripModel>> {
         return tripList

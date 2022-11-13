@@ -63,11 +63,6 @@ class ExpenseAdapter :
                 if (holder.itemView.tv_bottom.visibility == View.GONE) View.VISIBLE else View.GONE
             TransitionManager.beginDelayedTransition(holder.itemView.tv_top, AutoTransition())
 
-            Toast.makeText(
-                holder.itemView.context,
-                "CLICK" + item.expense_name.toString(),
-                Toast.LENGTH_SHORT
-            ).show()
             holder.itemView.tv_bottom.visibility = v
 
 

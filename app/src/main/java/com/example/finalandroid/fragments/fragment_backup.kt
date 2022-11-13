@@ -19,7 +19,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_backup.*
 
 
-class fragment_backup : Fragment() {
+open class fragment_backup : Fragment() {
     private lateinit var tripList: List<TripModel>;
     private lateinit var expenselist: List<Expense>;
 
@@ -68,8 +68,8 @@ class fragment_backup : Fragment() {
             .addOnSuccessListener { ok ->
                 Toast.makeText(requireContext(), "Upload OK", Toast.LENGTH_SHORT).show()
             }
-            .addOnFailureListener {
-                e ->
+            .addOnFailureListener { e ->
+                e.printStackTrace()
                 Toast.makeText(requireContext(), e.message.toString(), Toast.LENGTH_SHORT).show()
             }
     }

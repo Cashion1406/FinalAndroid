@@ -7,4 +7,5 @@
     <string name="welcome_message">Welcome Friends</string>
     <string name="new_user_name">What should we call you ?</string>
     <string name="forgot_pass_text">Enter your email and we\'ll send an email reset confirmation</string>
+    <string name="warning_messing">You are about to completely delete \nTrip and Expense Data</string>
 </resources>

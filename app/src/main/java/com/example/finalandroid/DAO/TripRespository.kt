@@ -30,6 +30,7 @@ class TripRespository(val tripDAO: TripDAO) {
 
     }
 
+
     fun deleteAll() {
         tripDAO.deleteALL()
 

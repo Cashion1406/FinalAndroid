@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.finalandroid.DAO.TripModel
 import com.example.finalandroid.R
+import com.example.finalandroid.adapter.tripAdapter
 import com.example.finalandroid.viewmodel.TripViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.android.synthetic.main.fragment_addtrip_fragment.*
@@ -25,7 +26,7 @@ import java.util.*
 class addtrip_fragment : Fragment() {
 
     private lateinit var tripviewmode: TripViewModel
-
+    private lateinit var tripAdapter: tripAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -125,6 +126,7 @@ class addtrip_fragment : Fragment() {
 
 
 
+
         if (name.isNotEmpty() && location.isNotEmpty() && date.isNotEmpty()) {
 
             val trip =
@@ -136,6 +138,7 @@ class addtrip_fragment : Fragment() {
                     desc,
                     ed_add_trip_risk.isChecked.toString(),
                     selectedtext
+
 
                 )
 

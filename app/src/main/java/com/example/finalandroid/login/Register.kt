@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.finalandroid.R
+import com.example.finalandroid.SessionManager.Session
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -29,8 +30,10 @@ class register : Fragment() {
     private lateinit var loadingProgressBar: Dialog
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
     }
 
@@ -67,6 +70,7 @@ class register : Fragment() {
                 "Email" to email,
                 "Phone" to phone
             )
+
 
             val db = Firebase.firestore
             val Users = db.collection("Users")

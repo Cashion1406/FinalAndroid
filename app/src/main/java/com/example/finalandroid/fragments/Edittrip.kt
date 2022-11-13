@@ -135,9 +135,10 @@ class edittrip : Fragment() {
                 expense_barchart.legend.isEnabled = false
                 expense_barchart.description.isEnabled = false
 
-                expense_barchart.animateY(2100)
+                expense_barchart.animateY(1700)
 
-                expense_barchart.xAxis.textSize = 12f
+                expense_barchart.xAxis.textSize = 13f
+                expense_barchart.extraBottomOffset=10f
 
                 val color: ArrayList<Int> = ArrayList()
 

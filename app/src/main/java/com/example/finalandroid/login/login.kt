@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.finalandroid.MainActivity
 import com.example.finalandroid.R
+
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.dialog_progress.*
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -74,10 +75,6 @@ class login : Fragment() {
                     if (task.isSuccessful) {
                         hideProgress()
                         val intent = Intent(requireContext(), MainActivity::class.java)
-
-
-
-
                         intent.putExtra("UID", FirebaseAuth.getInstance().currentUser?.uid)
                         startActivity(intent)
                         requireActivity().finish()

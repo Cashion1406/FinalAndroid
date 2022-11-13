@@ -4,14 +4,18 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.finalandroid.DAO.TripModel
 
 
-@Database(entities = [TripModel::class, Expense::class], version = 1, exportSchema = false)
+@Database(
+    entities = [TripModel::class, Expense::class],
+    version = 1,
+    exportSchema = false
+)
 abstract class TripDB : RoomDatabase() {
 
     abstract fun tripDAO(): TripDAO
     abstract fun expenseDAO(): ExpenseDAO
+
 
     companion object {
         @Volatile
