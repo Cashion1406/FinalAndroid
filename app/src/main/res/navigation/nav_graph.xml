@@ -19,14 +19,18 @@
             app:popExitAnim="@anim/custom_slide_right" />
         <action
             android:id="@+id/action_dashboard_fragment_to_fragment_backup"
-            app:destination="@id/fragment_backup" />
+            app:destination="@id/fragment_backup"
+            app:enterAnim="@anim/custom_slide_left"
+            app:exitAnim="@anim/custom_slide_right"
+            app:popEnterAnim="@anim/custom_slide_left"
+            app:popExitAnim="@anim/custom_slide_right" />
         <action
             android:id="@+id/action_dashboard_fragment_to_edittrip"
             app:destination="@id/edittrip"
-            app:enterAnim="@anim/custom_slide_left"
-            app:exitAnim="@anim/delay_anim"
-            app:popEnterAnim="@anim/delay_anim"
-            app:popExitAnim="@android:anim/slide_out_right" />
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@anim/custom_slide_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@anim/custom_slide_right" />
         <action
             android:id="@+id/action_dashboard_fragment_to_userNameDialog"
             app:destination="@id/userNameDialog" />
@@ -53,7 +57,11 @@
             app:destination="@id/tripDialog" />
         <action
             android:id="@+id/action_edittrip_to_dashboard_fragment"
-            app:destination="@id/dashboard_fragment" />
+            app:destination="@id/dashboard_fragment"
+            app:enterAnim="@android:anim/slide_out_right"
+            app:exitAnim="@android:anim/slide_in_left"
+            app:popEnterAnim="@android:anim/slide_out_right"
+            app:popExitAnim="@android:anim/slide_in_left" />
         <action
             android:id="@+id/action_edittrip_to_expenseDialog"
             app:destination="@id/expenseDialog" />

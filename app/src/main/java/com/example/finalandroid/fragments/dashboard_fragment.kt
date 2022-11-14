@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -333,32 +334,11 @@ class dashboard_fragment : Fragment() {
         }
 
         alertDialog.tv_backup.setOnClickListener {
-            upload()
+            val action = dashboard_fragmentDirections.actionDashboardFragmentToFragmentBackup()
+            findNavController().navigate(action)
             alertDialog.dismiss()
         }
 
     }
-
-
-    fun upload() {
-
-
-        val db = Firebase.firestore
-
-
-        val backUpModel = BackUpModel(tripList, expenselist)
-
-        db.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid)
-            .update(FirebaseAuth.getInstance().currentUser!!.uid, backUpModel)
-            .addOnSuccessListener { ok ->
-                Toast.makeText(requireContext(), "Upload OK", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener { e ->
-                e.printStackTrace()
-                Toast.makeText(requireContext(), e.message.toString(), Toast.LENGTH_SHORT).show()
-            }
-
-    }
-
 
 }
