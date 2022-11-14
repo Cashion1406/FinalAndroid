@@ -32,13 +32,13 @@
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/dialog_progress.xml" value="0.33" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/expense_row.xml" value="0.33" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_addtrip_fragment.xml" value="0.1" />
-        <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_backup.xml" value="0.25" />
+        <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_backup.xml" value="0.1" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_blank.xml" value="0.14583333333333334" />
-        <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_dashboard_fragment.xml" value="0.25" />
+        <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_dashboard_fragment.xml" value="0.5" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_dialogfragment.xml" value="0.25" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_edit_expense_diaglog.xml" value="0.25" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_edit_expense_dialog.xml" value="0.2391304347826087" />
-        <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_edittrip.xml" value="0.33" />
+        <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_edittrip.xml" value="0.25" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_expense_chart.xml" value="0.22" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_expense_dialog.xml" value="0.22" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_login.xml" value="0.22" />

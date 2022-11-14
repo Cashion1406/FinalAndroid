@@ -75,7 +75,7 @@ class edittrip : Fragment() {
         viewExpenseChart()
 
 
-        trip_desc.setOnClickListener {
+        btn_edit_trip.setOnClickListener {
 
             val action = edittripDirections.actionEdittripToTripDialog(currentTrip)
             Toast.makeText(requireContext(), args.currentTrip.name, Toast.LENGTH_SHORT).show()
@@ -138,7 +138,7 @@ class edittrip : Fragment() {
                 expense_barchart.animateY(1700)
 
                 expense_barchart.xAxis.textSize = 13f
-                expense_barchart.extraBottomOffset=10f
+                expense_barchart.extraBottomOffset = 10f
 
                 val color: ArrayList<Int> = ArrayList()
 
@@ -155,7 +155,7 @@ class edittrip : Fragment() {
                 expense_barchart.axisLeft.textSize = 13f
                 expense_barchart.axisLeft.setDrawGridLines(false)
 
-                barDataSet.valueTextSize = 18f
+                barDataSet.valueTextSize = 14f
                 barDataSet.colors = color
                 val xaxis: XAxis = expense_barchart.xAxis
                 xaxis.setDrawGridLines(false)

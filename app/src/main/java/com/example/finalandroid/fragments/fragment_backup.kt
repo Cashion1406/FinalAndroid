@@ -11,6 +11,7 @@ import com.example.finalandroid.DAO.BackUpModel
 import com.example.finalandroid.DAO.Expense
 import com.example.finalandroid.DAO.TripModel
 import com.example.finalandroid.R
+import com.example.finalandroid.adapter.NetworkManagement.NetworkConnection
 import com.example.finalandroid.viewmodel.ExpenseViewModel
 import com.example.finalandroid.viewmodel.TripViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -25,10 +26,11 @@ open class fragment_backup : Fragment() {
 
     private lateinit var tripViewModel: TripViewModel
     private lateinit var expenseViewModel: ExpenseViewModel
+    private lateinit var networkConnection: NetworkConnection
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        networkConnection = NetworkConnection(requireContext())
     }
 
     override fun onCreateView(
@@ -42,8 +44,25 @@ open class fragment_backup : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        btn_backup.setOnClickListener {
-            uploadData()
+
+        networkConnection.observe(viewLifecycleOwner) { connection ->
+
+            if (connection) {
+                Toast.makeText(requireContext(), "OK WIFI", Toast.LENGTH_SHORT).show()
+                iv_connection.visibility = View.GONE
+                tv_network_title.visibility = View.GONE
+                tv_network_desc.visibility = View.GONE
+                btn_backup.setOnClickListener {
+                    uploadData()
+                }
+
+            } else {
+                Toast.makeText(requireContext(), "NOT OK WIFI", Toast.LENGTH_SHORT).show()
+                iv_connection.visibility = View.VISIBLE
+                tv_network_title.visibility = View.VISIBLE
+                tv_network_desc.visibility = View.VISIBLE
+
+            }
         }
 
         tripViewModel = ViewModelProvider(this)[TripViewModel::class.java]

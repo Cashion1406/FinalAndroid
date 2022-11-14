@@ -38,6 +38,7 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import kotlinx.android.synthetic.main.fragment_expense_dialog.*
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -75,21 +76,29 @@ class ExpenseDialog : DialogFragment() {
             override fun onLocationResult(p0: LocationResult) {
                 super.onLocationResult(p0)
 
-                mCurrentLocation = p0.lastLocation!!
+                mCurrentLocation = p0.lastLocation
 
-
-                geocoder = Geocoder(requireContext(), Locale.getDefault())
-                val addresses: List<Address> = geocoder!!.getFromLocation(
-                    mCurrentLocation!!.latitude,
-                    mCurrentLocation!!.longitude, 1
-                )
-
-                val location =
-                    addresses[0].adminArea.toString() + "\n" + addresses[0].getAddressLine(
-                        0
+                try {
+                    geocoder = Geocoder(requireContext(), Locale.getDefault())
+                    val addresses: List<Address> = geocoder!!.getFromLocation(
+                        mCurrentLocation!!.latitude,
+                        mCurrentLocation!!.longitude, 1
                     )
 
-                address = location
+                    val location =
+                        addresses[0].adminArea.toString() + "\n" + addresses[0].getAddressLine(
+                            0
+                        )
+
+                    address = location
+                } catch (e: IOException) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Cant Fetch Location at moment",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
 
 
             }

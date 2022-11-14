@@ -3,21 +3,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.fragment_backup"
+    android:gravity="center"
     android:orientation="vertical"
-    android:gravity="center">
+    tools:context=".fragments.fragment_backup">
 
+    <ImageView
+        android:id="@+id/iv_connection"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_round_wifi_off_24">
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/tv_network_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="Network Error"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="bold">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/tv_network_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="Wifi/Mobile network not avaliable"
+        android:textSize="17sp">
+
+    </TextView>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_backup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginStart="15dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/round_button"
-        android:layout_gravity="center"
         android:text="Upload"
         android:textSize="17sp"
 

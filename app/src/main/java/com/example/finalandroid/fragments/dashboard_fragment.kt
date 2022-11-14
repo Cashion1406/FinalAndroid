@@ -20,15 +20,20 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.finalandroid.DAO.BackUpModel
+import com.example.finalandroid.DAO.Expense
 import com.example.finalandroid.DAO.TripModel
 import com.example.finalandroid.MainActivity
 import com.example.finalandroid.R
 import com.example.finalandroid.WelcomeActivity
 import com.example.finalandroid.adapter.tripAdapter
+import com.example.finalandroid.viewmodel.ExpenseViewModel
 import com.example.finalandroid.viewmodel.TripViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.alert_dialog.*
 import kotlinx.android.synthetic.main.fragment_dashboard_fragment.*
 import java.util.*
@@ -38,12 +43,20 @@ class dashboard_fragment : Fragment() {
     private lateinit var tripAdapter: tripAdapter
 
     private lateinit var tripviewmode: TripViewModel
+
+    private lateinit var expenseViewModel: ExpenseViewModel
+
     private lateinit var db: FirebaseFirestore
+
     private var user_name: String? = null
+
+    private lateinit var tripList: List<TripModel>;
+
+    private lateinit var expenselist: List<Expense>;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        expenseViewModel = ViewModelProvider(this)[ExpenseViewModel::class.java]
         tripviewmode = ViewModelProvider(this)[TripViewModel::class.java]
         tripAdapter = tripAdapter()
 
@@ -128,6 +141,16 @@ class dashboard_fragment : Fragment() {
             requireActivity().finish()
 
         }
+        tripviewmode.getalltrip().observe(viewLifecycleOwner) { trip ->
+            tripList = trip
+        }
+        expenseViewModel.getallExpense().observe(viewLifecycleOwner) {
+
+                expense ->
+
+            expenselist = expense
+        }
+
 
 
         sv_trip.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -312,10 +335,32 @@ class dashboard_fragment : Fragment() {
         }
 
         alertDialog.tv_backup.setOnClickListener {
-
+            upload()
             alertDialog.dismiss()
         }
 
     }
+
+
+    fun upload() {
+
+
+        val db = Firebase.firestore
+
+
+        val backUpModel = BackUpModel(tripList, expenselist)
+
+        db.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid)
+            .update(FirebaseAuth.getInstance().currentUser!!.uid, backUpModel)
+            .addOnSuccessListener { ok ->
+                Toast.makeText(requireContext(), "Upload OK", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                e.printStackTrace()
+                Toast.makeText(requireContext(), e.message.toString(), Toast.LENGTH_SHORT).show()
+            }
+
+    }
+
 
 }
