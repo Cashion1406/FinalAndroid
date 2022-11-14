@@ -27,6 +27,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.finalandroid.BuildConfig
 import com.example.finalandroid.DAO.Expense
 import com.example.finalandroid.R
+import com.example.finalandroid.adapter.NetworkManagement.NetworkConnection
 import com.example.finalandroid.viewmodel.ExpenseViewModel
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.ResolvableApiException
@@ -65,11 +66,12 @@ class ExpenseDialog : DialogFragment() {
     private var geocoder: Geocoder? = null
     private var mRequestionLocationUPdate = false
     private var address: String? = null
+    private lateinit var networkConnection: NetworkConnection
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        networkConnection = NetworkConnection(requireContext())
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         mSettingClient = LocationServices.getSettingsClient(requireContext())
         mLocationCallback = object : LocationCallback() {
@@ -79,22 +81,68 @@ class ExpenseDialog : DialogFragment() {
                 mCurrentLocation = p0.lastLocation
 
                 try {
-                    geocoder = Geocoder(requireContext(), Locale.getDefault())
-                    val addresses: List<Address> = geocoder!!.getFromLocation(
-                        mCurrentLocation!!.latitude,
-                        mCurrentLocation!!.longitude, 1
-                    )
+                    networkConnection.observe(viewLifecycleOwner) { connection ->
 
-                    val location =
-                        addresses[0].adminArea.toString() + "\n" + addresses[0].getAddressLine(
-                            0
-                        )
+                        if (connection) {
+                            geocoder = Geocoder(requireContext(), Locale.getDefault())
+                            val addresses: List<Address> = geocoder!!.getFromLocation(
+                                mCurrentLocation!!.latitude,
+                                mCurrentLocation!!.longitude, 1
+                            )
 
-                    address = location
+                            val location =
+                                addresses[0].adminArea.toString() + "\n" + addresses[0].getAddressLine(
+                                    0
+                                )
+
+                            address = location
+
+                        } else {
+                            try {
+                                if (ActivityCompat.checkSelfPermission(
+                                        requireContext(),
+                                        Manifest.permission.ACCESS_FINE_LOCATION
+                                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                                        requireContext(),
+                                        Manifest.permission.ACCESS_COARSE_LOCATION
+                                    ) != PackageManager.PERMISSION_GRANTED
+                                ) {
+                                    return@observe
+                                }
+                                mFusedLocationClient.lastLocation.addOnSuccessListener {
+                                    geocoder = Geocoder(requireContext(), Locale.getDefault())
+                                    val addresses: List<Address> = geocoder!!.getFromLocation(
+                                        mCurrentLocation!!.latitude,
+                                        mCurrentLocation!!.longitude, 1
+                                    )
+
+                                    val location =
+                                        addresses[0].adminArea.toString() + "\n" + addresses[0].getAddressLine(
+                                            0
+                                        )
+
+                                    address = location
+
+                                }
+
+                            } catch (e: IOException) {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Cant Fetch Location at moment",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
+                            }
+
+                        }
+
+                    }
+
+
                 } catch (e: IOException) {
                     Toast.makeText(
                         requireContext(),
-                        "Cant Fetch Location at moment",
+                        "Location Unavailable",
                         Toast.LENGTH_SHORT
                     ).show()
 
