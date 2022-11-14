@@ -52,11 +52,13 @@ open class fragment_backup : Fragment() {
                 iv_connection.visibility = View.GONE
                 tv_network_title.visibility = View.GONE
                 tv_network_desc.visibility = View.GONE
+                btn_backup.isEnabled = true
                 btn_backup.setOnClickListener {
                     uploadData()
                 }
 
             } else {
+                btn_backup.isEnabled = false
                 Toast.makeText(requireContext(), "NOT OK WIFI", Toast.LENGTH_SHORT).show()
                 iv_connection.visibility = View.VISIBLE
                 tv_network_title.visibility = View.VISIBLE

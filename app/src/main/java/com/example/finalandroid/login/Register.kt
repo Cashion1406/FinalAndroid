@@ -5,19 +5,15 @@ import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.finalandroid.R
-import com.example.finalandroid.SessionManager.Session
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.dialog_progress.*
@@ -29,13 +25,6 @@ class register : Fragment() {
 
     private lateinit var loadingProgressBar: Dialog
 
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -111,7 +100,7 @@ class register : Fragment() {
                             } else {
                                 hideProgress()
 
-                                Log.i("FIREBASE", task.exception!!.message.toString());
+                                Log.i("FIREBASE", task.exception!!.message.toString())
                                 tv_reg_warning.text = task.exception?.message.toString()
                             }
                         }

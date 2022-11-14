@@ -56,7 +56,7 @@ class addtrip_fragment : Fragment() {
         btn_add_trip.setOnClickListener {
             addtrip()
         }
-        ed_add_trip_date.setOnClickListener {
+        ic_calendar.setOnClickListener {
             getDateRange()
         }
 

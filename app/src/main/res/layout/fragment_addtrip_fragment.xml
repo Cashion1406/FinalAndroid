@@ -142,31 +142,51 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/register_firstname"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="22dp"
-                android:layout_marginEnd="15dp"
-                android:orientation="vertical"
-                android:paddingTop="15dp"
-                app:helperText=""
-                app:helperTextTextColor="@android:color/holo_red_dark">
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/ed_add_trip_date"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/register_firstname"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableRight="@drawable/ic_outline_calendar_month_24"
-                    android:hint="Date"
-                    android:inputType="text">
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="22dp"
+                    android:layout_marginEnd="15dp"
+                    android:orientation="vertical"
+                    android:paddingTop="15dp"
+                    app:helperText=""
+                    app:helperTextTextColor="@android:color/holo_red_dark">
 
-                </androidx.appcompat.widget.AppCompatEditText>
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/ed_add_trip_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Date"
+                        android:inputType="text">
+
+                    </androidx.appcompat.widget.AppCompatEditText>
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/ic_calendar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignTop="@+id/register_firstname"
+                    android:layout_alignEnd="@+id/register_firstname"
+                    android:layout_alignBottom="@+id/register_firstname"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_outline_calendar_month_24">
+
+                </ImageView>
+            </RelativeLayout>
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/register_lastname"
@@ -186,6 +206,8 @@
                     android:id="@+id/ed_add_trip_desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:hint="Description"
                     android:inputType="textCapSentences|textMultiLine"
                     android:lines="3"
 
@@ -225,7 +247,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="Require Risk Assessetment"
-                    android:textSize="14sp">
+                    android:textSize="16sp">
 
                 </androidx.appcompat.widget.AppCompatTextView>
 

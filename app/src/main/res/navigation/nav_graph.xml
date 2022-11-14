@@ -13,8 +13,10 @@
         <action
             android:id="@+id/action_dashboard_fragment_to_addtrip_fragment"
             app:destination="@id/addtrip_fragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:popEnterAnim="@android:anim/slide_in_left" />
+            app:enterAnim="@anim/custom_slide_left"
+            app:exitAnim="@anim/custom_slide_right"
+            app:popEnterAnim="@anim/custom_slide_left"
+            app:popExitAnim="@anim/custom_slide_right" />
         <action
             android:id="@+id/action_dashboard_fragment_to_fragment_backup"
             app:destination="@id/fragment_backup" />
@@ -38,6 +40,7 @@
             android:id="@+id/action_addtrip_fragment_to_dashboard_fragment"
             app:destination="@id/dashboard_fragment"
             app:enterAnim="@anim/custom_slide_left"
+            app:exitAnim="@anim/custom_slide_right"
             app:popEnterAnim="@anim/custom_slide_left" />
     </fragment>
     <fragment
