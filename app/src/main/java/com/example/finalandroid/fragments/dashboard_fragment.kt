@@ -52,7 +52,8 @@ class dashboard_fragment : Fragment() {
 
     private lateinit var tripList: List<TripModel>;
 
-    private lateinit var expenselist: List<Expense>;
+    private lateinit var expenselist: List<Expense>
+    private var UID: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,15 +61,11 @@ class dashboard_fragment : Fragment() {
         tripviewmode = ViewModelProvider(this)[TripViewModel::class.java]
         tripAdapter = tripAdapter()
 
-        val user = FirebaseAuth.getInstance().currentUser
-        if (user != null) {
-
-            Toast.makeText(
-                requireContext(),
-                FirebaseAuth.getInstance().currentUser!!.email.toString(),
-                Toast.LENGTH_SHORT
-            ).show()
-
+        //if user avaaiable
+        val realuser = FirebaseAuth.getInstance().currentUser
+        if (realuser != null) {
+            UID = realuser.uid
+            Toast.makeText(requireContext(), UID.toString(), Toast.LENGTH_SHORT).show()
 
         } else {
             startActivity(Intent(requireActivity(), WelcomeActivity::class.java))
@@ -169,6 +166,7 @@ class dashboard_fragment : Fragment() {
                 return true
             }
         })
+
     }
 
     private fun loadusername() {
@@ -178,16 +176,16 @@ class dashboard_fragment : Fragment() {
                 "name",
                 Context.MODE_PRIVATE
             )
+        //fetch user name preference from regigser
         if (sharedPreferences.contains("name_key")) {
             Toast.makeText(requireContext(), "NO Firebase", Toast.LENGTH_SHORT).show()
             tv_user_name.text = sharedPreferences.getString("name_key", null)
 
         } else {
-
-
+            //if login directly
             if (user_name == null) {
                 if (context != null) {
-                    db.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid)
+                    db.collection("Users").document(UID.toString())
                         .get()
                         .addOnSuccessListener { task ->
                             Toast.makeText(requireContext(), "Yes Firebase", Toast.LENGTH_SHORT)

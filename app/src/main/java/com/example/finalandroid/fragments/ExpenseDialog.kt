@@ -84,6 +84,11 @@ class ExpenseDialog : DialogFragment() {
                     networkConnection.observe(viewLifecycleOwner) { connection ->
 
                         if (connection) {
+                            Toast.makeText(
+                                requireContext(),
+                                "USING WIFI + LOCATION",
+                                Toast.LENGTH_LONG
+                            ).show()
                             geocoder = Geocoder(requireContext(), Locale.getDefault())
                             val addresses: List<Address> = geocoder!!.getFromLocation(
                                 mCurrentLocation!!.latitude,
@@ -98,6 +103,11 @@ class ExpenseDialog : DialogFragment() {
                             address = location
 
                         } else {
+                            Toast.makeText(
+                                requireContext(),
+                                "ONLY LOCATION",
+                                Toast.LENGTH_LONG
+                            ).show()
                             try {
                                 if (ActivityCompat.checkSelfPermission(
                                         requireContext(),
