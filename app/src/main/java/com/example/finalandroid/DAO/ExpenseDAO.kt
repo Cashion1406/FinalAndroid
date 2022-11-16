@@ -39,4 +39,9 @@ interface ExpenseDAO {
 
     @Query("SELECT * FROM expense_table WHERE trip_id =:tripID ORDER BY expense_id DESC")
     fun getExpense(tripID: Int): Flow<List<Expense>>
+
+    @Query("SELECT * FROM expense_table where trip_id = :tripID ORDER BY expense_id DESC LIMIT 1")
+    fun getlastedExpense(tripID: Int):Flow<List<Expense>>
+
+
 }

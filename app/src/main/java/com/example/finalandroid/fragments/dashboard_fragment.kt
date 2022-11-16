@@ -61,7 +61,6 @@ class dashboard_fragment : Fragment() {
         expenseViewModel = ViewModelProvider(this)[ExpenseViewModel::class.java]
         tripviewmode = ViewModelProvider(this)[TripViewModel::class.java]
         tripAdapter = tripAdapter()
-
         //if user avaaiable
         val realuser = FirebaseAuth.getInstance().currentUser
         if (realuser != null) {

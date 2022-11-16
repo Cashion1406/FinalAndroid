@@ -3,12 +3,14 @@ package com.example.finalandroid.fragments
 
 import android.Manifest
 import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
@@ -57,14 +59,17 @@ class ExpenseDialog : DialogFragment() {
     private val UPDATE_INTERVAL: Long = 5000
     private val UPDATE_FASTEST: Long = 1000
 
+    private lateinit var latestExpense: List<Expense>
 
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
+
     private var mSettingClient: SettingsClient? = null
     private var mLocationRequest: LocationRequest? = null
     private var mLocationSettingRequest: LocationSettingsRequest? = null
     private var mLocationCallback: LocationCallback? = null
     private var mCurrentLocation: Location? = null
     private var geocoder: Geocoder? = null
+    private var lastlocation: String? = null
     private var mRequestionLocationUPdate = false
     private var address: String? = null
     private lateinit var networkConnection: NetworkConnection
@@ -72,30 +77,62 @@ class ExpenseDialog : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         networkConnection = NetworkConnection(requireContext())
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         mSettingClient = LocationServices.getSettingsClient(requireContext())
+
+
         mLocationCallback = object : LocationCallback() {
             override fun onLocationResult(p0: LocationResult) {
                 super.onLocationResult(p0)
                 mCurrentLocation = p0.lastLocation
 
+
                 try {
-                    geocoder = Geocoder(requireContext(), Locale.getDefault())
-                    val addresses: List<Address> = geocoder!!.getFromLocation(
-                        mCurrentLocation!!.latitude,
-                        mCurrentLocation!!.longitude, 1
-                    )
 
-                    val location =
-                        addresses[0].adminArea.toString() + "\n" + addresses[0].getAddressLine(0)
+                    networkConnection.observe(viewLifecycleOwner) { connection ->
+                        if (connection) {
+                            geocoder = Geocoder(requireContext(), Locale.getDefault())
+                            val addresses: List<Address> = geocoder!!.getFromLocation(
+                                mCurrentLocation!!.latitude,
+                                mCurrentLocation!!.longitude, 1
+                            )
 
-                    address = location
+                            val location =
+                                addresses[0].adminArea.toString() + "\n" + addresses[0].getAddressLine(
+                                    0
+                                )
+
+                            address = location
+                            lastlocation = location
+
+                        } else {
+                            expenseViewModel.getLastedExepnse(args.expenseInfo.id)
+                                .observe(viewLifecycleOwner) { expense ->
+                                    latestExpense = expense
+
+
+                                    for (e in latestExpense) {
+
+                                        address = "Last known at" + "\n" + e.location.toString()
+                                    }
+
+
+                                }
+
+
+                        }
+
+                    }
+
+
                 } catch (e: IOException) {
 
                     e.printStackTrace()
                     Log.i("CATN FETCH LOCATION", e.toString())
                 }
+
             }
         }
         mLocationRequest =
@@ -139,7 +176,6 @@ class ExpenseDialog : DialogFragment() {
     ): View? {
         // Inflate the layout for this fragment
 
-
         return inflater.inflate(R.layout.fragment_expense_dialog, container, false)
 
     }
@@ -175,6 +211,7 @@ class ExpenseDialog : DialogFragment() {
 
 
     }
+
 
     fun openSetting() {
 
@@ -285,22 +322,20 @@ class ExpenseDialog : DialogFragment() {
         val date = ed_add_expense_date.text.toString().trim { it <= ' ' }
         var desc = ed_add_expense_desc.text.toString().trim { it <= ' ' }
         val trip_id = args.expenseInfo.id
-        var location: String? = null
+
         if (address != null && desc.isEmpty()) {
 
-            location = address.toString()
-            desc = location.toString()
-        } else if (address == null) {
-
-            location = "Location Unavailable"
-            desc = location
+            desc = address.toString()
+        } else if (address == null || address!!.isEmpty()) {
+            address = "N/A"
+            desc = address.toString()
         }
 
 
         if (name.isNotEmpty() && price.isNotEmpty() && date.isNotEmpty()) {
 
             val expense =
-                Expense(0, name, price.toDouble(), date, desc, trip_id, location)
+                Expense(0, name, price.toDouble(), date, desc, trip_id, address)
 
             expenseViewModel.addExpense(expense)
             ed_add_expense_name.text?.clear()

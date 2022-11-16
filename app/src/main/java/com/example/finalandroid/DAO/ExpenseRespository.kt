@@ -33,4 +33,9 @@ class ExpenseRespository(val expenseDAO: ExpenseDAO) {
 
     }
 
+    fun getlastedExpense(trip_id: Int):Flow<List<Expense>> {
+
+        return expenseDAO.getlastedExpense(trip_id)
+    }
+
 }

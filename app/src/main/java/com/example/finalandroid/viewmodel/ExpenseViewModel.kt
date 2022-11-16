@@ -53,6 +53,12 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
         return respository.getAllExpense(trip_id).asLiveData()
     }
 
+    fun getLastedExepnse(trip_id: Int): LiveData<List<Expense>> {
+
+        return respository.getlastedExpense(trip_id).asLiveData()
+    }
+
+
     fun getallExpense(): LiveData<List<Expense>> {
 
         return respository.getexpensev2()
