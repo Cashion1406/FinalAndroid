@@ -9,7 +9,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -22,7 +21,6 @@ import com.google.firebase.ktx.Firebase
 import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.dialog_progress.*
 import kotlinx.android.synthetic.main.fragment_register.*
-import kotlin.properties.Delegates
 
 
 class register : Fragment() {
@@ -43,43 +41,59 @@ class register : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (args.offlineMode) {
+            btn_register.tag = true
             reg_email.visibility = View.GONE
             reg_pass.visibility = View.GONE
             reg_phone.visibility = View.GONE
             terms_condition.visibility = View.GONE
-            register_title.text = "Hi, "
+            register_title.text = "Hi there, User!"
             layout_have_account.visibility = View.GONE
-            btn_register.tag = 1
+
 
         }
 
 
         btn_register.setOnClickListener {
-            val status = btn_register.tag as Int
-            if (status==0){
-                registerUser()
-            }
-            else {
+
+            if (btn_register.tag == true) {
                 offlinemode()
+
+            } else {
+                registerUser()
             }
         }
     }
 
     private fun offlinemode() {
-        val userName = ed_reg_user_name.text.toString().trim { it <= ' ' }
-        val sharedPreferences =
-            requireActivity().getSharedPreferences(
-                "name",
-                Context.MODE_PRIVATE
-            )
-        val editor = sharedPreferences.edit()
-        editor.apply {
 
-            putString("name_key", userName)
-        }.apply()
-        val intent = Intent(requireContext(), MainActivity::class.java)
-        startActivity(intent)
-        requireActivity().finish()
+        val userName = ed_reg_user_name.text.toString().trim { it <= ' ' }
+
+        if (userName.isNotEmpty()){
+            val sharedPreferences =
+                requireActivity().getSharedPreferences(
+                    "name",
+                    Context.MODE_PRIVATE
+                )
+            val editor = sharedPreferences.edit()
+            editor.apply {
+
+                putString("name_key", userName)
+            }.apply()
+            val intent = Intent(requireContext(), MainActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+
+        }
+        else{
+
+            FancyToast.makeText(
+                requireContext(),
+                "Name can't empty ",
+                FancyToast.LENGTH_SHORT,
+                FancyToast.ERROR,
+                false
+            ).show()        }
+
     }
 
     private fun registerUser() {

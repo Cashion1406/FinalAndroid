@@ -21,12 +21,13 @@ import com.example.finalandroid.viewmodel.ExpenseViewModel
 import com.example.finalandroid.viewmodel.TripViewModel
 import com.github.mikephil.charting.charts.Chart
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_edittrip.*
-import kotlinx.android.synthetic.main.fragment_expense_chart.*
 import java.text.NumberFormat
 import java.util.*
 
@@ -64,7 +65,6 @@ class edittrip : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         expenseViewModel = ViewModelProvider(this)[ExpenseViewModel::class.java]
         tripViewModel = ViewModelProvider(this)[TripViewModel::class.java]
 
@@ -73,8 +73,6 @@ class edittrip : Fragment() {
         fetchtripinfo()
         viewExpense()
         viewExpenseChart()
-
-
         btn_edit_trip.setOnClickListener {
 
             val action = edittripDirections.actionEdittripToTripDialog(currentTrip)
@@ -91,13 +89,10 @@ class edittrip : Fragment() {
             .observe(viewLifecycleOwner) { expenses ->
                 expenseList = expenses
                 if (expenseList.isEmpty()) {
-
                     tv_totalprice.text = "Total Expense "
                 }
                 totalprice()
             }
-
-
     }
 
     private fun viewExpenseChart() {
@@ -193,6 +188,23 @@ class edittrip : Fragment() {
             trip_date.text = trip.date
             trip_desc.text = trip.description
             cb_trip_info_risk.isChecked = trip.riskmanagement.toBoolean()
+            when (trip.transpotation) {
+                "Plane" -> {
+                    trip_car.visibility = View.GONE
+                    trip_sea.visibility = View.GONE
+
+                }
+                "Sea" -> {
+                    trip_plane.visibility = View.GONE
+                    trip_car.visibility = View.GONE
+                }
+                else -> {
+                    trip_plane.visibility = View.GONE
+                    trip_sea.visibility = View.GONE
+
+                }
+            }
+
         }
 
     }

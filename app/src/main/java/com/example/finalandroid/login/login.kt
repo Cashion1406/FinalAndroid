@@ -67,7 +67,7 @@ class login : Fragment() {
         val userpass = ed_pass.text.toString().trim { it <= ' ' }
 
         if (useremail.isNotEmpty() && userpass.isNotEmpty()) {
-            showProgress("Please Waite")
+            showProgress("Please Wait")
             FirebaseAuth.getInstance().signInWithEmailAndPassword(useremail, userpass)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {

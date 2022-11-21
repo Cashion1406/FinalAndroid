@@ -244,7 +244,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="Require Risk Assessetment"
-                    android:textSize="16sp">
+                    android:textSize="16sp"
+                    android:textColor="@color/black">
 
                 </androidx.appcompat.widget.AppCompatTextView>
 

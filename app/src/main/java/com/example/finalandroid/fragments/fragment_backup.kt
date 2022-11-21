@@ -1,11 +1,10 @@
 package com.example.finalandroid.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.finalandroid.DAO.BackUpModel
 import com.example.finalandroid.DAO.Expense
@@ -93,11 +92,7 @@ open class fragment_backup : Fragment() {
     }
 
     private fun uploadData() {
-
-        //Toast.makeText(requireContext(), FirebaseAuth.getInstance().currentUser!!.uid.toString(), Toast.LENGTH_SHORT).show()
-
         val db = Firebase.firestore
-
 
         val backUpModel = BackUpModel(tripList, expenselist)
 
@@ -114,7 +109,13 @@ open class fragment_backup : Fragment() {
             }
             .addOnFailureListener { e ->
                 e.printStackTrace()
-                Toast.makeText(requireContext(), e.message.toString(), Toast.LENGTH_SHORT).show()
+                FancyToast.makeText(
+                    requireContext(),
+                    e.message.toString(),
+                    FancyToast.LENGTH_SHORT,
+                    FancyToast.ERROR,
+                    false
+                ).show()
             }
     }
 

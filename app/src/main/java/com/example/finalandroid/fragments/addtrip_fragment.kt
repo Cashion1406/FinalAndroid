@@ -9,14 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.RadioButton
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.finalandroid.DAO.TripModel
 import com.example.finalandroid.R
-import com.example.finalandroid.adapter.tripAdapter
-import com.example.finalandroid.viewmodel.TripViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.fragment_addtrip_fragment.*
@@ -26,12 +22,6 @@ import java.util.*
 
 class addtrip_fragment : Fragment() {
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -135,7 +125,6 @@ class addtrip_fragment : Fragment() {
                     transportation
                 )
 
-            Toast.makeText(requireContext(), trip.id.toString(), Toast.LENGTH_SHORT).show()
             val action = addtrip_fragmentDirections.actionAddtripFragmentToConfirmationTrip2(trip)
             findNavController().navigate(action)
             view?.hideKeyboard()
