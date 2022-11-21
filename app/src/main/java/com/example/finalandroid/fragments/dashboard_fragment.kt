@@ -5,15 +5,11 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -21,7 +17,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.finalandroid.DAO.BackUpModel
 import com.example.finalandroid.DAO.Expense
 import com.example.finalandroid.DAO.TripModel
 import com.example.finalandroid.MainActivity
@@ -33,11 +28,9 @@ import com.example.finalandroid.viewmodel.TripViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.alert_dialog.*
 import kotlinx.android.synthetic.main.fragment_dashboard_fragment.*
-import java.util.*
 
 
 class dashboard_fragment : Fragment() {
@@ -51,7 +44,7 @@ class dashboard_fragment : Fragment() {
 
     private var user_name: String? = null
 
-    private lateinit var tripList: List<TripModel>;
+    private lateinit var tripList: List<TripModel>
 
     private lateinit var expenselist: List<Expense>
     private var UID: String? = null
@@ -61,17 +54,28 @@ class dashboard_fragment : Fragment() {
         expenseViewModel = ViewModelProvider(this)[ExpenseViewModel::class.java]
         tripviewmode = ViewModelProvider(this)[TripViewModel::class.java]
         tripAdapter = tripAdapter()
-        //if user avaaiable
+        val sharedPreferences =
+            requireActivity().getSharedPreferences("name", Context.MODE_PRIVATE)
+
         val realuser = FirebaseAuth.getInstance().currentUser
         if (realuser != null) {
             UID = realuser.uid
-            Toast.makeText(requireContext(), UID.toString(), Toast.LENGTH_SHORT).show()
 
+
+        } else if (sharedPreferences.contains("name_key")) {
+
+
+            FancyToast.makeText(
+                requireContext(),
+                "Hello ${sharedPreferences.getString("name_key", null)}",
+                FancyToast.LENGTH_SHORT,
+                FancyToast.SUCCESS,
+                false
+            ).show()
         } else {
             startActivity(Intent(requireActivity(), WelcomeActivity::class.java))
             requireActivity().finish()
         }
-
 
     }
 
@@ -81,11 +85,8 @@ class dashboard_fragment : Fragment() {
     ): View? {
 
         (activity as MainActivity).supportActionBar?.title = ""
-        // Inflate the layout for this fragment
-
 
         return inflater.inflate(R.layout.fragment_dashboard_fragment, container, false)
-
 
     }
 
@@ -95,9 +96,7 @@ class dashboard_fragment : Fragment() {
         loadusername()
         viewTrip()
 
-
         img_search.setOnClickListener {
-
 
             user_reveal.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
             val reveal =
@@ -105,35 +104,23 @@ class dashboard_fragment : Fragment() {
             reveal_search_bar.visibility = reveal
             sv_trip.isIconified = false
 
-            //reveal_search_bar.layoutTransition.enableTransitionType(LayoutTransition.CHANGE_APPEARING)
         }
         sv_trip.setOnCloseListener {
 
             reveal_search_bar.visibility = View.GONE
-
-
             true
         }
 
         tv_user_name.setOnLongClickListener {
-
             click()
             return@setOnLongClickListener true
-
         }
         tv_user_name.setOnClickListener {
-
-
             val sharedPreferences =
                 requireActivity().getSharedPreferences("name", Context.MODE_PRIVATE)
-
             sharedPreferences.edit().clear().apply()
             user_name = null
-            Toast.makeText(requireContext(), user_name.toString(), Toast.LENGTH_SHORT).show()
-
             FirebaseAuth.getInstance().signOut()
-
-
             startActivity(Intent(requireActivity(), WelcomeActivity::class.java))
             requireActivity().finish()
 
@@ -148,25 +135,25 @@ class dashboard_fragment : Fragment() {
             expenselist = expense
         }
 
-
-
         sv_trip.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-
                 return false
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-
-
-                filterlist(newText)
-
-
-
+                newfill(newText)
                 return true
             }
         })
 
+    }
+
+    private fun newfill(newText: String) {
+        val searquer = "%$newText%"
+
+        tripviewmode.search(searquer).observe(this) { tripss ->
+            tripAdapter.setTrip(tripss)
+        }
     }
 
     private fun loadusername() {
@@ -178,7 +165,6 @@ class dashboard_fragment : Fragment() {
             )
         //fetch user name preference from regigser
         if (sharedPreferences.contains("name_key")) {
-            Toast.makeText(requireContext(), "NO Firebase", Toast.LENGTH_SHORT).show()
             tv_user_name.text = sharedPreferences.getString("name_key", null)
 
         } else {
@@ -188,9 +174,6 @@ class dashboard_fragment : Fragment() {
                     db.collection("Users").document(UID.toString())
                         .get()
                         .addOnSuccessListener { task ->
-                            Toast.makeText(requireContext(), "Yes Firebase", Toast.LENGTH_SHORT)
-                                .show()
-
                             user_name = task.get("Name").toString()
                             tv_user_name.text = user_name
                         }
@@ -253,11 +236,7 @@ class dashboard_fragment : Fragment() {
 
 
                         tripviewmode.deletetrip(tripos)
-                        Toast.makeText(
-                            requireContext(),
-                            viewHolder.adapterPosition.toString(),
-                            Toast.LENGTH_SHORT
-                        ).show()
+
                         Snackbar.make(rv_trip, "Delete " + tripos.name, Snackbar.LENGTH_LONG)
                             .setAction(
                                 "Undo"
@@ -274,44 +253,6 @@ class dashboard_fragment : Fragment() {
 
             }
 
-        }
-
-
-    }
-
-
-    fun filterlist(text: String) {
-
-
-        val fillist: ArrayList<TripModel> = ArrayList()
-
-        tripviewmode.getalltrip().observe(viewLifecycleOwner) {
-
-                trip ->
-
-            for (t in trip) {
-
-                if (t.name.lowercase(Locale.ROOT)
-                        .contains(text.lowercase(Locale.ROOT)) || t.destination.lowercase(Locale.ROOT)
-                        .contains(text.lowercase(Locale.ROOT))
-
-                ) {
-                    fillist.add(t)
-
-                }
-
-
-            }
-            if (fillist.isEmpty()) {
-                rv_trip.visibility = View.GONE
-                tv_no_trip_text.visibility = View.VISIBLE
-            } else {
-
-                rv_trip.visibility = View.VISIBLE
-                tv_no_trip_text.visibility = View.GONE
-            }
-
-            tripAdapter.setTrip(fillist)
         }
 
 

@@ -17,8 +17,10 @@
         <entry key="..\:/FinalAndroid/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1905" />
         <entry key="..\:/FinalAndroid/app/src/main/res/drawable/ic_outline_calendar_month_24.xml" value="0.145" />
         <entry key="..\:/FinalAndroid/app/src/main/res/drawable/ic_outline_cloud_24.xml" value="0.147" />
+        <entry key="..\:/FinalAndroid/app/src/main/res/drawable/ic_outline_no_accounts_24.xml" value="0.151" />
         <entry key="..\:/FinalAndroid/app/src/main/res/drawable/ic_outline_place_24.xml" value="0.2115" />
         <entry key="..\:/FinalAndroid/app/src/main/res/drawable/ic_round_arrow_forward_ios_24.xml" value="0.208" />
+        <entry key="..\:/FinalAndroid/app/src/main/res/drawable/ic_round_wifi_off_24.xml" value="0.151" />
         <entry key="..\:/FinalAndroid/app/src/main/res/drawable/ic_sharp_airplanemode_active_24.xml" value="0.145" />
         <entry key="..\:/FinalAndroid/app/src/main/res/drawable/purple_rounded_bg.xml" value="0.1" />
         <entry key="..\:/FinalAndroid/app/src/main/res/drawable/round_button.xml" value="0.147" />
@@ -28,30 +30,33 @@
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/activity_test_ggmap.xml" value="0.25" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/activity_welcome.xml" value="0.25" />
-        <entry key="..\:/FinalAndroid/app/src/main/res/layout/alert_dialog.xml" value="0.33" />
+        <entry key="..\:/FinalAndroid/app/src/main/res/layout/alert_dialog.xml" value="0.22" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/bottom_sheet_filter.xml" value="0.25" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/chip_filter.xml" value="0.25" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/dialog_progress.xml" value="0.33" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/expense_row.xml" value="0.33" />
-        <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_addtrip_fragment.xml" value="0.33" />
-        <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_backup.xml" value="0.22" />
+        <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_addtrip_fragment.xml" value="0.18" />
+        <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_backup.xml" value="0.75" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_blank.xml" value="0.14583333333333334" />
-        <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_dashboard_fragment.xml" value="0.5" />
+        <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_dashboard_fragment.xml" value="0.18" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_dialogfragment.xml" value="0.25" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_edit_expense_diaglog.xml" value="0.25" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_edit_expense_dialog.xml" value="0.2391304347826087" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_edittrip.xml" value="0.25" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_expense_chart.xml" value="0.22" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_expense_dialog.xml" value="0.22" />
-        <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_login.xml" value="0.22" />
+        <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_login.xml" value="0.25" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_register.xml" value="0.22" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_reset_pass.xml" value="0.4860557768924303" />
+        <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_trip_confirmation.xml" value="0.22" />
+        <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_trip_confirmation2.xml" value="0.15598290598290598" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_trip_dialog.xml" value="0.25" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_user_name__dialog.xml" value="0.25" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_user_register.xml" value="0.1621376811594203" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/fragment_user_register_fragment.xml" value="0.1621376811594203" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/places_row.xml" value="0.25" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/rename_dialog.xml" value="0.5" />
+        <entry key="..\:/FinalAndroid/app/src/main/res/layout/trip_confirmation_dialog.xml" value="0.22" />
         <entry key="..\:/FinalAndroid/app/src/main/res/layout/trip_row.xml" value="0.33" />
         <entry key="..\:/FinalAndroid/app/src/main/res/menu/menu.xml" value="0.20416666666666666" />
       </map>

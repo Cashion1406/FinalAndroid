@@ -13,7 +13,6 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginBottom="-10dp"
-        android:src="@drawable/ic_round_wifi_off_24"
         app:layout_constraintBottom_toTopOf="@+id/tv_network_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

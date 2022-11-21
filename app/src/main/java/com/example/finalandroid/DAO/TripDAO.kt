@@ -37,7 +37,7 @@ interface TripDAO {
     @Query("SELECT * FROM TRIP_TABLE WHERE id =:tripId")
     fun gettrip(tripId: Int): LiveData<TripModel>
 
-    @Query("SELECT * FROM trip_table WHERE name LIKE :querry")
+    @Query("SELECT * FROM trip_table WHERE name LIKE :querry OR destination LIKE :querry ORDER BY ID DESC")
     fun getv2(querry: String): Flow<List<TripModel>>
 
 }

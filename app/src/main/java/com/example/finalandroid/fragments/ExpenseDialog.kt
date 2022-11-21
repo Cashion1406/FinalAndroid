@@ -69,7 +69,7 @@ class ExpenseDialog : DialogFragment() {
     private var mLocationCallback: LocationCallback? = null
     private var mCurrentLocation: Location? = null
     private var geocoder: Geocoder? = null
-    private var lastlocation: String? = null
+
     private var mRequestionLocationUPdate = false
     private var address: String? = null
     private lateinit var networkConnection: NetworkConnection
@@ -105,34 +105,32 @@ class ExpenseDialog : DialogFragment() {
                                 )
 
                             address = location
-                            lastlocation = location
 
                         } else {
                             expenseViewModel.getLastedExepnse(args.expenseInfo.id)
                                 .observe(viewLifecycleOwner) { expense ->
                                     latestExpense = expense
-
-
+                                    
                                     for (e in latestExpense) {
 
-                                        address = "Last known at" + "\n" + e.location.toString()
+                                        address = if (e.location!!.contains("Last known at")) {
+
+                                            e.location.toString()
+                                        } else {
+                                            "Last known at" + "\n" + e.location.toString()
+
+                                        }
+
                                     }
-
-
                                 }
-
-
                         }
 
                     }
 
-
                 } catch (e: IOException) {
-
                     e.printStackTrace()
                     Log.i("CATN FETCH LOCATION", e.toString())
                 }
-
             }
         }
         mLocationRequest =

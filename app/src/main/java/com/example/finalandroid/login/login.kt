@@ -49,29 +49,27 @@ class login : Fragment() {
 
         tv_regigster.setOnClickListener {
 
-            val action = loginDirections.actionLoginToRegister()
+            val action = loginDirections.actionLoginToRegister(false)
             findNavController().navigate(action)
         }
+        tv_offline_mode.setOnClickListener{
 
+
+            val action = loginDirections.actionLoginToRegister(true)
+            findNavController().navigate(action)
+        }
 
     }
 
     private fun checkUser() {
-        //FirebaseAuth.getInstance().signInWithEmailAndPassword()
 
         val useremail = ed_email.text.toString().trim { it <= ' ' }
         val userpass = ed_pass.text.toString().trim { it <= ' ' }
 
         if (useremail.isNotEmpty() && userpass.isNotEmpty()) {
-
             showProgress("Please Waite")
-
             FirebaseAuth.getInstance().signInWithEmailAndPassword(useremail, userpass)
-                .addOnCompleteListener {
-
-                        task ->
-
-
+                .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         hideProgress()
                         val intent = Intent(requireContext(), MainActivity::class.java)

@@ -31,9 +31,6 @@
             app:exitAnim="@anim/custom_slide_right"
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@anim/custom_slide_right" />
-        <action
-            android:id="@+id/action_dashboard_fragment_to_userNameDialog"
-            app:destination="@id/userNameDialog" />
     </fragment>
     <fragment
         android:id="@+id/addtrip_fragment"
@@ -41,11 +38,8 @@
         android:label="Add Trip"
         tools:layout="@layout/fragment_addtrip_fragment">
         <action
-            android:id="@+id/action_addtrip_fragment_to_dashboard_fragment"
-            app:destination="@id/dashboard_fragment"
-            app:enterAnim="@anim/custom_slide_left"
-            app:exitAnim="@anim/custom_slide_right"
-            app:popEnterAnim="@anim/custom_slide_left" />
+            android:id="@+id/action_addtrip_fragment_to_confirmation_trip2"
+            app:destination="@id/confirmation_trip2" />
     </fragment>
     <fragment
         android:id="@+id/edittrip"
@@ -128,12 +122,15 @@
             app:argType="com.example.finalandroid.DAO.TripModel" />
     </fragment>
     <dialog
-        android:id="@+id/userNameDialog"
-        android:name="com.example.finalandroid.fragments.UserNameDialog"
-        android:label="UserNameDialog" >
+        android:id="@+id/confirmation_trip2"
+        android:name="com.example.finalandroid.fragments.confirmation_trip"
+        android:label="trip_confirmation_dialog"
+        tools:layout="@layout/trip_confirmation_dialog" >
+        <action
+            android:id="@+id/action_confirmation_trip2_to_dashboard_fragment"
+            app:destination="@id/dashboard_fragment" />
         <argument
-            android:name="CurrentUserName"
-            app:argType="string"
-            app:nullable="true" />
+            android:name="nowtrip"
+            app:argType="com.example.finalandroid.DAO.TripModel" />
     </dialog>
 </navigation>

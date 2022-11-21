@@ -35,13 +35,8 @@ class tripAdapter :
         holder.tvName.text = item.name
 
         holder.tvDate.text = item.date
-
-        if (item.riskmanagement == "true") {
-            holder.cbRisk.isChecked = true
-        }
-
-
-
+        holder.cbRisk.setOnCheckedChangeListener(null)
+        holder.cbRisk.isChecked = item.riskmanagement == "true"
         holder.itemView.setOnClickListener {
             val action = dashboard_fragmentDirections.actionDashboardFragmentToEdittrip(item)
             holder.itemView.findNavController().navigate(action)

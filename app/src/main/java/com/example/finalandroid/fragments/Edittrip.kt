@@ -87,13 +87,12 @@ class edittrip : Fragment() {
             findNavController().navigate(action)
         }
 
-        //observe expense price diff and calc
         expenseViewModel.getExpense(args.currentTrip.id)
             .observe(viewLifecycleOwner) { expenses ->
                 expenseList = expenses
                 if (expenseList.isEmpty()) {
 
-                    tv_totalprice.text = "Total"
+                    tv_totalprice.text = "Total Expense "
                 }
                 totalprice()
             }
@@ -124,7 +123,6 @@ class edittrip : Fragment() {
                     )
                 )
 
-                //Label For each Expense
                 arrayListX.add(it[expense].expense_name)
                 val barDataSet = BarDataSet(expenseChartList, "")
 
@@ -216,8 +214,6 @@ class edittrip : Fragment() {
 
                 rv_expense.layoutManager = LinearLayoutManager(requireContext())
 
-
-                //init trip adapter with passed param
 
                 expenseViewModel.getExpense(args.currentTrip.id)
                     .observe(viewLifecycleOwner) { expense ->

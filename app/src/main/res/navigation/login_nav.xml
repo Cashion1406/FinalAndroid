@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_register_to_login"
             app:destination="@id/login" />
+        <argument
+            android:name="offline_mode"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/reset_pass"

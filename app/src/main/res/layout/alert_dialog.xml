@@ -48,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="12sp"
+                android:textColor="@color/black"
                 android:text="Would you like to backup your data ?"
                 android:textSize="16sp">
 

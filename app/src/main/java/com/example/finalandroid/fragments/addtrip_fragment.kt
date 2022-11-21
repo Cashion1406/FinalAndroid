@@ -18,6 +18,7 @@ import com.example.finalandroid.R
 import com.example.finalandroid.adapter.tripAdapter
 import com.example.finalandroid.viewmodel.TripViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.fragment_addtrip_fragment.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -25,12 +26,9 @@ import java.util.*
 
 class addtrip_fragment : Fragment() {
 
-    private lateinit var tripviewmode: TripViewModel
-    private lateinit var tripAdapter: tripAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        tripviewmode = ViewModelProvider(this)[TripViewModel::class.java]
 
 
     }
@@ -54,7 +52,7 @@ class addtrip_fragment : Fragment() {
         getCurrentDate()
 
         btn_add_trip.setOnClickListener {
-            addtrip()
+            confirmation()
         }
         ic_calendar.setOnClickListener {
             getDateRange()
@@ -112,7 +110,7 @@ class addtrip_fragment : Fragment() {
     }
 
 
-    private fun addtrip() {
+    private fun confirmation() {
 
 
         val name = ed_add_trip_name.text.toString().trim { it <= ' ' }
@@ -122,10 +120,7 @@ class addtrip_fragment : Fragment() {
 
         val radioButtonID = rg_select.checkedRadioButtonId
         val radioButton = rg_select.findViewById<View>(radioButtonID) as? RadioButton
-        val selectedtext = radioButton?.text as? String
-
-
-
+        val transportation = radioButton?.text as? String
 
         if (name.isNotEmpty() && location.isNotEmpty() && date.isNotEmpty()) {
 
@@ -137,25 +132,22 @@ class addtrip_fragment : Fragment() {
                     date,
                     desc,
                     ed_add_trip_risk.isChecked.toString(),
-                    selectedtext
-
-
+                    transportation
                 )
 
-            tripviewmode.addtrip(trip)
-            ed_add_trip_name.text?.clear()
-            ed_add_trip_destination.text?.clear()
-
-            ed_add_trip_desc.text?.clear()
-
             Toast.makeText(requireContext(), trip.id.toString(), Toast.LENGTH_SHORT).show()
-
-            val action = addtrip_fragmentDirections.actionAddtripFragmentToDashboardFragment()
+            val action = addtrip_fragmentDirections.actionAddtripFragmentToConfirmationTrip2(trip)
             findNavController().navigate(action)
             view?.hideKeyboard()
         } else {
 
-            Toast.makeText(requireContext(), "SHITY INPUT", Toast.LENGTH_SHORT).show()
+            FancyToast.makeText(
+                requireContext(),
+                "Please enter essential information",
+                FancyToast.LENGTH_SHORT,
+                FancyToast.ERROR,
+                false
+            ).show()
         }
 
 
