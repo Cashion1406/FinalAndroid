@@ -33,9 +33,9 @@ class tripAdapter :
         val item = trips[position]
 
         holder.tvName.text = item.name
-
-        holder.tvDate.text = item.date
         holder.cbRisk.setOnCheckedChangeListener(null)
+        holder.tvDate.text = item.date
+
         holder.cbRisk.isChecked = item.riskmanagement == "true"
         holder.itemView.setOnClickListener {
             val action = dashboard_fragmentDirections.actionDashboardFragmentToEdittrip(item)

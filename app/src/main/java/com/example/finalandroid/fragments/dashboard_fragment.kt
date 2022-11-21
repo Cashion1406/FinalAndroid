@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -17,7 +18,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.finalandroid.DAO.Expense
 import com.example.finalandroid.DAO.TripModel
 import com.example.finalandroid.MainActivity
 import com.example.finalandroid.R
@@ -31,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.alert_dialog.*
 import kotlinx.android.synthetic.main.fragment_dashboard_fragment.*
+import java.util.*
 
 
 class dashboard_fragment : Fragment() {
@@ -44,10 +45,11 @@ class dashboard_fragment : Fragment() {
 
     private var user_name: String? = null
 
-    private lateinit var tripList: List<TripModel>
-
-    private lateinit var expenselist: List<Expense>
     private var UID: String? = null
+
+    private var currentSearch: String? = null
+
+    private var currentTransportation: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,7 +97,13 @@ class dashboard_fragment : Fragment() {
 
         loadusername()
         viewTrip()
+        tv_chip_group.setOnCheckedChangeListener { _, _ ->
 
+            val id: Int = tv_chip_group.checkedRadioButtonId
+            val rb: RadioButton = tv_chip_group.findViewById(id)
+            currentTransportation = rb.text.toString()
+            filterchip(rb.text.toString())
+        }
         img_search.setOnClickListener {
 
             user_reveal.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
@@ -125,15 +133,7 @@ class dashboard_fragment : Fragment() {
             requireActivity().finish()
 
         }
-        tripviewmode.getalltrip().observe(viewLifecycleOwner) { trip ->
-            tripList = trip
-        }
-        expenseViewModel.getallExpense().observe(viewLifecycleOwner) {
 
-                expense ->
-
-            expenselist = expense
-        }
 
         sv_trip.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -141,6 +141,7 @@ class dashboard_fragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
+                currentSearch = newText
                 newfill(newText)
                 return true
             }
@@ -148,13 +149,65 @@ class dashboard_fragment : Fragment() {
 
     }
 
-    private fun newfill(newText: String) {
-        val searquer = "%$newText%"
 
-        tripviewmode.search(searquer).observe(this) { tripss ->
-            tripAdapter.setTrip(tripss)
+    //search by transpor type
+    fun filterchip(type: String) {
+
+        val chipfill: ArrayList<TripModel> = ArrayList()
+        tripviewmode.tripList.observe(viewLifecycleOwner) { trip ->
+            for (t in trip) {
+                if (t.transpotation?.lowercase(Locale.ROOT)
+                        ?.contains(type.lowercase(Locale.ROOT)) == true
+                ) {
+                    if (currentSearch == null || currentSearch?.isEmpty() == true) {
+
+                        chipfill.add(t)
+
+                    } else {
+                        if (t.name.lowercase(Locale.ROOT)
+                                .contains(currentSearch!!.lowercase(Locale.ROOT))
+                        ) {
+                            chipfill.add(t)
+                        }
+                    }
+
+                }
+            }
+
+        }
+        tripAdapter.setTrip(chipfill)
+    }
+
+    //search by trip name
+    private fun newfill(newText: String) {
+        val filter: ArrayList<TripModel> = ArrayList()
+
+        tripviewmode.tripList.observe(this) { tripss ->
+
+            for (e in tripss) {
+
+                if (e.name.lowercase(Locale.ROOT).contains(newText.lowercase(Locale.ROOT))) {
+
+                    //if no search trans detect, continue normal search by name
+                    if (currentTransportation == null) {
+                        filter.add(e)
+                    } else {
+                        //if yes transporataion, add that into the list
+                        if (currentTransportation?.lowercase(Locale.ROOT)?.let {
+                                e.transpotation?.lowercase(Locale.ROOT)
+                                    ?.contains(it)
+                            } == true
+                        ) {
+                            filter.add(e)
+                        }
+                    }
+
+                }
+            }
+            tripAdapter.setTrip(filter)
         }
     }
+
 
     private fun loadusername() {
         db = FirebaseFirestore.getInstance()
@@ -183,21 +236,17 @@ class dashboard_fragment : Fragment() {
                 tv_user_name.text = user_name
             }
 
-
         }
-
-
     }
 
 
     fun viewTrip() {
         tripviewmode.getalltrip().observe(viewLifecycleOwner) { trip ->
-
+            sv_trip.queryHint = "${trip.size} trips available"
             if (trip.isNotEmpty()) {
 
                 rv_trip.visibility = View.VISIBLE
                 tv_no_trip_text.visibility = View.GONE
-
 
 
                 rv_trip.adapter = tripAdapter

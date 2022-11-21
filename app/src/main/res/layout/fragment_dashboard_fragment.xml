@@ -96,6 +96,64 @@
     </LinearLayout>
 
 
+    <RadioGroup
+
+        android:id="@+id/tv_chip_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_user"
+        app:layout_constraintVertical_bias="0.028">
+
+        <RadioButton
+            android:id="@+id/rd_plane"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/travel_type_selector"
+            android:button="@android:color/transparent"
+
+            android:drawableTop="@drawable/ic_sharp_airplanemode_active_24"
+
+            android:text="Plane"
+            android:textAlignment="center">
+
+        </RadioButton>
+
+        <RadioButton
+            android:id="@+id/rd_sea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/travel_type_selector"
+            android:button="@android:color/transparent"
+            android:drawableTop="@drawable/ic_sharp_water_24"
+
+            android:text="Sea"
+            android:textAlignment="center">
+
+        </RadioButton>
+
+        <RadioButton
+            android:id="@+id/rd_car"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/travel_type_selector"
+            android:button="@android:color/transparent"
+            android:drawableTop="@drawable/ic_outline_directions_car_24"
+
+            android:text="Road"
+            android:textAlignment="center">
+
+        </RadioButton>
+    </RadioGroup>
+
     <LinearLayout
         android:id="@+id/layout_ok"
         android:layout_width="match_parent"
@@ -104,8 +162,10 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_user">
+        app:layout_constraintTop_toBottomOf="@+id/tv_chip_group"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_trip"
@@ -116,7 +176,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_user"
+            app:layout_constraintTop_toBottomOf="@+id/tv_chip_group"
             tools:visibility="gone"
 
             />
@@ -135,7 +195,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_user"
+            app:layout_constraintTop_toBottomOf="@+id/tv_chip_group"
             tools:visibility="visible" />
 
     </LinearLayout>
