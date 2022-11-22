@@ -76,15 +76,13 @@ class login : Fragment() {
                         intent.putExtra("UID", FirebaseAuth.getInstance().currentUser?.uid)
                         startActivity(intent)
                         requireActivity().finish()
-                        // startActivity(Intent(this, MainActivity::class.java))
+
                     } else {
                         hideProgress()
                         tv_warning.text = task.exception?.message.toString()
                     }
-
                 }
         } else {
-
             username()
             userpass()
         }

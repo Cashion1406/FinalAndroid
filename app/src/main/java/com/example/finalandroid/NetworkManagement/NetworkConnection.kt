@@ -1,4 +1,4 @@
-package com.example.finalandroid.adapter.NetworkManagement
+package com.example.finalandroid.NetworkManagement
 
 import android.app.usage.NetworkStatsManager
 import android.content.BroadcastReceiver

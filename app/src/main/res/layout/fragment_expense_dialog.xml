@@ -117,7 +117,7 @@
             android:id="@+id/ed_add_expense_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:hint="Description"
             android:inputType="textCapSentences|textMultiLine"
             android:lines="3"
 

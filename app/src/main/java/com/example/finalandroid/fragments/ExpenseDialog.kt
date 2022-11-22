@@ -30,7 +30,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.finalandroid.BuildConfig
 import com.example.finalandroid.DAO.Expense
 import com.example.finalandroid.R
-import com.example.finalandroid.adapter.NetworkManagement.NetworkConnection
+import com.example.finalandroid.NetworkManagement.NetworkConnection
 import com.example.finalandroid.viewmodel.ExpenseViewModel
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.ResolvableApiException

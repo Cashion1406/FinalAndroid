@@ -5,24 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.fragment.navArgs
 import com.example.finalandroid.DAO.TripDAO
-import com.example.finalandroid.DAO.TripModel
 import com.example.finalandroid.R
-import com.example.finalandroid.adapter.tripAdapter
-
 import com.example.finalandroid.viewmodel.TripViewModel
-
-import kotlinx.android.synthetic.main.fragment_edittrip.*
+import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.fragment_trip_dialog.*
-import java.util.*
 
 
 class TripDialog : DialogFragment() {
@@ -79,13 +70,11 @@ class TripDialog : DialogFragment() {
 
     fun fetchtripinfo() {
 
-
         ed_edit_trip_name.setText(args.tripinfo.name)
         ed_edit_trip_destination.setText(args.tripinfo.destination)
         ed_edit_trip_date.setText(args.tripinfo.date)
         ed_edit_trip_desc.setText(args.tripinfo.description)
         cb_edit_trip_risk.isChecked = args.tripinfo.riskmanagement.toBoolean()
-
 
     }
 
@@ -96,7 +85,6 @@ class TripDialog : DialogFragment() {
         val date = ed_edit_trip_date.text.toString().trim { it <= ' ' }
         val descripp = ed_edit_trip_desc.text.toString().trim { it <= ' ' }
         val risk = cb_edit_trip_risk.isChecked.toString()
-
 
         if (name.isNotEmpty() && location.isNotEmpty() && date.isNotEmpty()) {
 
@@ -110,17 +98,22 @@ class TripDialog : DialogFragment() {
             )
 
             tripviewmode.updatetrip(updatetrip)
-
-
-
-            Toast.makeText(requireContext(), "Updated successfully.", Toast.LENGTH_SHORT).show()
-
+            FancyToast.makeText(
+                requireContext(),
+                "Update successfully ",
+                FancyToast.LENGTH_SHORT,
+                FancyToast.SUCCESS,
+                false
+            ).show()
             dialog!!.dismiss()
-
         } else {
-            Toast.makeText(requireContext(), "SHITY UPDATE,", Toast.LENGTH_SHORT).show()
-
-
+            FancyToast.makeText(
+                requireContext(),
+                "Please enter essential trip details",
+                FancyToast.LENGTH_SHORT,
+                FancyToast.ERROR,
+                false
+            ).show()
         }
     }
 

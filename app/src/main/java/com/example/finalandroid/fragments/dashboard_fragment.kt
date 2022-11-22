@@ -148,14 +148,15 @@ class dashboard_fragment : Fragment() {
 
     fun getSelecttransport() {
 
-        for (rbPosition in 0 until tv_chip_group.childCount) {
-            val rb = tv_chip_group.getChildAt(rbPosition) as RadioButton
-            rb.setOnClickListener {
-                currentTransportation = rb.text.toString()
-                filterchip(rb.text.toString())
-                rb.isChecked = false
-            }
+
+        tv_chip_group.setOnCheckedChangeListener { _, _ ->
+
+            val id: Int = tv_chip_group.checkedRadioButtonId
+            val rb: RadioButton = tv_chip_group.findViewById(id)
+            currentTransportation = rb.text.toString()
+            filterchip(rb.text.toString())
         }
+
 
     }
 
@@ -252,8 +253,6 @@ class dashboard_fragment : Fragment() {
 
                 rv_trip.visibility = View.VISIBLE
                 tv_no_trip_text.visibility = View.GONE
-
-
                 rv_trip.adapter = tripAdapter
                 rv_trip.layoutManager = LinearLayoutManager(requireContext())
                 val divider = DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
@@ -265,17 +264,11 @@ class dashboard_fragment : Fragment() {
                 )
                 rv_trip.addItemDecoration(divider)//*
 
-                //init trip adapter with passed param
-
-
                 tripviewmode.getalltrip().observe(viewLifecycleOwner) { trip ->
                     tripAdapter.setTrip(trip)
                 }
 
-
-                //swipe to delete
                 ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-
                     override fun onMove(
                         recyclerView: RecyclerView,
                         viewHolder: RecyclerView.ViewHolder,
@@ -286,9 +279,6 @@ class dashboard_fragment : Fragment() {
 
                     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                         val tripos: TripModel = tripAdapter.gettrip(viewHolder.adapterPosition)
-
-
-
                         tripviewmode.deletetrip(tripos)
 
                         Snackbar.make(rv_trip, "Delete " + tripos.name, Snackbar.LENGTH_LONG)
@@ -299,7 +289,6 @@ class dashboard_fragment : Fragment() {
 
                             }.show()
                     }
-
                 }).attachToRecyclerView(rv_trip)
             } else {
                 rv_trip.visibility = View.GONE

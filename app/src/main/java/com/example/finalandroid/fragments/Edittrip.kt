@@ -76,7 +76,7 @@ class edittrip : Fragment() {
         btn_edit_trip.setOnClickListener {
 
             val action = edittripDirections.actionEdittripToTripDialog(currentTrip)
-            Toast.makeText(requireContext(), args.currentTrip.name, Toast.LENGTH_SHORT).show()
+
             findNavController().navigate(action)
         }
 
@@ -248,12 +248,6 @@ class edittrip : Fragment() {
                             expenseAdapter.getExpense(viewHolder.adapterPosition)
 
                         expenseViewModel.deleteExpense(expensepos)
-
-                        Toast.makeText(
-                            requireContext(),
-                            viewHolder.adapterPosition.toString(),
-                            Toast.LENGTH_SHORT
-                        ).show()
                         Snackbar.make(
                             rv_expense,
                             "Delete " + expensepos.expense_name,

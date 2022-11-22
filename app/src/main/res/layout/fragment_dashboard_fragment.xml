@@ -77,8 +77,8 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
                 android:layout_marginEnd="5dp"
+                android:orientation="vertical"
 
                 >
 
@@ -93,19 +93,20 @@
                     android:src="@drawable/ic_baseline_search_24">
 
                 </ImageView>
+
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_weight="1">
 
                 </View>
+
                 <ImageView
                     android:id="@+id/filter_search"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    android:src="@drawable/ic_round_filter_list_24"
-                    >
+                    android:src="@drawable/ic_round_filter_list_24">
 
                 </ImageView>
             </LinearLayout>
@@ -115,13 +116,13 @@
     </LinearLayout>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:visibility="gone"
-        android:animateLayoutChanges="true"
+    <RadioGroup
+
         android:id="@+id/tv_chip_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="-10dp"
+        android:visibility="gone"
         android:gravity="center"
         android:orientation="horizontal"
 
@@ -154,10 +155,11 @@
             android:id="@+id/rd_sea"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:background="@drawable/travel_type_selector"
             android:button="@android:color/transparent"
             android:drawableTop="@drawable/ic_sharp_water_24"
-
             android:text="Sea"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -172,10 +174,8 @@
             android:id="@+id/rd_car"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="80dp"
             android:background="@drawable/travel_type_selector"
             android:button="@android:color/transparent"
-
             android:drawableTop="@drawable/ic_outline_directions_car_24"
             android:text="Road"
             android:textAlignment="center"
@@ -185,6 +185,12 @@
             app:layout_constraintVertical_bias="0.0">
 
         </RadioButton>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+        </View>
 
         <RadioButton
             android:id="@+id/rd_clear"
@@ -194,8 +200,8 @@
             android:background="@drawable/travel_type_selector"
             android:button="@android:color/transparent"
             android:drawableTop="@drawable/ic_round_clear_24"
-            android:minWidth="10dp"
-            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:padding="2dp"
             android:text="Clear"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -206,7 +212,7 @@
             app:layout_constraintVertical_bias="1.0">
 
         </RadioButton>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RadioGroup>
 
     <LinearLayout
         android:id="@+id/layout_ok"

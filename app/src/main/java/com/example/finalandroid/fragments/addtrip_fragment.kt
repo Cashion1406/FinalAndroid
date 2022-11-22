@@ -102,16 +102,13 @@ class addtrip_fragment : Fragment() {
 
     private fun confirmation() {
 
-
         val name = ed_add_trip_name.text.toString().trim { it <= ' ' }
         val location = ed_add_trip_destination.text.toString().trim { it <= ' ' }
         val date = ed_add_trip_date.text.toString().trim { it <= ' ' }
         val desc = ed_add_trip_desc.text.toString().trim { it <= ' ' }
-
         val radioButtonID = rg_select.checkedRadioButtonId
         val radioButton = rg_select.findViewById<View>(radioButtonID) as? RadioButton
         val transportation = radioButton?.text as? String
-
         if (name.isNotEmpty() && location.isNotEmpty() && date.isNotEmpty()) {
 
             val trip =
@@ -138,10 +135,7 @@ class addtrip_fragment : Fragment() {
                 false
             ).show()
         }
-
-
     }
-
 
     private fun getCurrentDate() {
         val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.US)
