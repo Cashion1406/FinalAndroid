@@ -66,7 +66,6 @@ class dashboard_fragment : Fragment() {
 
         } else if (sharedPreferences.contains("name_key")) {
 
-
             FancyToast.makeText(
                 requireContext(),
                 "Hello ${sharedPreferences.getString("name_key", null)}",
@@ -97,13 +96,7 @@ class dashboard_fragment : Fragment() {
 
         loadusername()
         viewTrip()
-        tv_chip_group.setOnCheckedChangeListener { _, _ ->
-
-            val id: Int = tv_chip_group.checkedRadioButtonId
-            val rb: RadioButton = tv_chip_group.findViewById(id)
-            currentTransportation = rb.text.toString()
-            filterchip(rb.text.toString())
-        }
+        getSelecttransport()
         img_search.setOnClickListener {
 
             user_reveal.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
@@ -111,14 +104,19 @@ class dashboard_fragment : Fragment() {
                 if (reveal_search_bar.visibility == View.GONE) View.VISIBLE else View.GONE
             reveal_search_bar.visibility = reveal
             sv_trip.isIconified = false
+        }
+
+        filter_search.setOnClickListener {
+            val read = if (tv_chip_group.visibility == View.GONE) View.VISIBLE else View.GONE
+            tv_chip_group.visibility = read
 
         }
+
         sv_trip.setOnCloseListener {
 
             reveal_search_bar.visibility = View.GONE
             true
         }
-
         tv_user_name.setOnLongClickListener {
             click()
             return@setOnLongClickListener true
@@ -134,7 +132,6 @@ class dashboard_fragment : Fragment() {
 
         }
 
-
         sv_trip.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 return false
@@ -149,6 +146,18 @@ class dashboard_fragment : Fragment() {
 
     }
 
+    fun getSelecttransport() {
+
+        for (rbPosition in 0 until tv_chip_group.childCount) {
+            val rb = tv_chip_group.getChildAt(rbPosition) as RadioButton
+            rb.setOnClickListener {
+                currentTransportation = rb.text.toString()
+                filterchip(rb.text.toString())
+                rb.isChecked = false
+            }
+        }
+
+    }
 
     //search by transpor type
     fun filterchip(type: String) {
@@ -170,10 +179,10 @@ class dashboard_fragment : Fragment() {
                             chipfill.add(t)
                         }
                     }
-
+                } else if (type == "Clear") {
+                    chipfill.add(t)
                 }
             }
-
         }
         tripAdapter.setTrip(chipfill)
     }
@@ -189,7 +198,7 @@ class dashboard_fragment : Fragment() {
                 if (e.name.lowercase(Locale.ROOT).contains(newText.lowercase(Locale.ROOT))) {
 
                     //if no search trans detect, continue normal search by name
-                    if (currentTransportation == null) {
+                    if (currentTransportation == null || currentTransportation?.isEmpty() == true) {
                         filter.add(e)
                     } else {
                         //if yes transporataion, add that into the list
@@ -201,13 +210,11 @@ class dashboard_fragment : Fragment() {
                             filter.add(e)
                         }
                     }
-
                 }
             }
             tripAdapter.setTrip(filter)
         }
     }
-
 
     private fun loadusername() {
         db = FirebaseFirestore.getInstance()
@@ -231,11 +238,9 @@ class dashboard_fragment : Fragment() {
                             tv_user_name.text = user_name
                         }
                 }
-
             } else {
                 tv_user_name.text = user_name
             }
-
         }
     }
 
