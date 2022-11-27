@@ -120,13 +120,10 @@ class ExpenseDialog : DialogFragment() {
                                             "Last known at" + "\n" + e.location.toString()
 
                                         }
-
                                     }
                                 }
                         }
-
                     }
-
                 } catch (e: IOException) {
                     e.printStackTrace()
                     Log.i("CATN FETCH LOCATION", e.toString())
@@ -199,14 +196,11 @@ class ExpenseDialog : DialogFragment() {
         btn_add_expense.setOnClickListener {
 
             addExpense()
-
-
         }
         ed_add_expense_date.setOnClickListener {
 
             getDate()
         }
-
 
     }
 
@@ -241,7 +235,7 @@ class ExpenseDialog : DialogFragment() {
                 )
 
             }
-                ?.addOnFailureListener {
+/*                ?.addOnFailureListener {
 
                     val status: Int = (it as ApiException).statusCode
 
@@ -271,7 +265,7 @@ class ExpenseDialog : DialogFragment() {
                                 Toast.LENGTH_SHORT
                             ).show()
                     }
-                }
+                }*/
         }
     }
 

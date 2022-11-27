@@ -99,9 +99,7 @@ class addtrip_fragment : Fragment() {
         datepicker.show()
     }
 
-
     private fun confirmation() {
-
         val name = ed_add_trip_name.text.toString().trim { it <= ' ' }
         val location = ed_add_trip_destination.text.toString().trim { it <= ' ' }
         val date = ed_add_trip_date.text.toString().trim { it <= ' ' }
@@ -121,11 +119,11 @@ class addtrip_fragment : Fragment() {
                     ed_add_trip_risk.isChecked.toString(),
                     transportation
                 )
-
             val action = addtrip_fragmentDirections.actionAddtripFragmentToConfirmationTrip2(trip)
             findNavController().navigate(action)
             view?.hideKeyboard()
         } else {
+            ed_add_trip_name.error = "Trip name is empty"
 
             FancyToast.makeText(
                 requireContext(),
@@ -192,4 +190,10 @@ class addtrip_fragment : Fragment() {
     }
 
 
+    override fun onPause() {
+        super.onPause()
+        if (rg_select != null) {
+            rg_select.clearCheck()
+        }
+    }
 }

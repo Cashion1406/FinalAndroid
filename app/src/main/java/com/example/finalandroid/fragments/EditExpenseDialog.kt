@@ -95,7 +95,7 @@ class EditExpenseDialog : DialogFragment() {
 
 
         } else {
-            Toast.makeText(requireContext(), "SHITY UPDATE,", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "PLease enter essential information", Toast.LENGTH_SHORT).show()
 
 
         }

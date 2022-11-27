@@ -99,7 +99,6 @@ class register : Fragment() {
     private fun registerUser() {
 
         if (valiteUser()) {
-
             val email = ed_reg_email.text.toString().trim { it <= ' ' }
             val password = ed_reg_pass.text.toString().trim { it <= ' ' }
             val userName = ed_reg_user_name.text.toString().trim { it <= ' ' }
@@ -111,19 +110,15 @@ class register : Fragment() {
                 "Email" to email,
                 "Phone" to phone
             )
-
-
             val db = Firebase.firestore
             val Users = db.collection("Users")
 
             showProgress("Please Waite")
             val query = Users.whereEqualTo("Email", email).get().addOnSuccessListener {
-
                     query ->
                 if (query.isEmpty) {
                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener {
-
                                 task ->
                             if (task.isSuccessful) {
                                 hideProgress()

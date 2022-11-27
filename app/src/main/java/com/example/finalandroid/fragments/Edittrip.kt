@@ -176,7 +176,6 @@ class edittrip : Fragment() {
 
     fun fetchtripinfo() {
 
-
         tripViewModel.gettrip(args.currentTrip.id).observe(viewLifecycleOwner) {
 
                 trip ->

@@ -2,16 +2,16 @@ package com.example.finalandroid.login
 
 import android.app.Dialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.finalandroid.R
 import com.google.firebase.auth.FirebaseAuth
+import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.dialog_progress.*
-import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_reset_pass.*
 
 class reset_pass : Fragment() {
@@ -33,16 +33,9 @@ class reset_pass : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-
-
         btn_reset_pass.setOnClickListener {
-
             resetEmail()
-
         }
-
 
     }
 
@@ -61,21 +54,23 @@ class reset_pass : Fragment() {
                     val action = reset_passDirections.actionResetPassToLogin()
 
                     findNavController().navigate(action)
-                    Toast.makeText(requireContext(), "Please Check your Email", Toast.LENGTH_SHORT)
-                        .show()
+                    FancyToast.makeText(
+                        requireContext(),
+                        "Reset email sent",
+                        FancyToast.LENGTH_SHORT,
+                        FancyToast.SUCCESS,
+                        false
+                    ).show()
+
                 } else {
                     hideProgress()
 
-                    //ed_reset_email.clearFocus()
                     tv_reset_error.text = task.exception!!.message.toString()
                 }
             }
-
         } else {
-
             userEmailFocus()
         }
-
     }
 
     private fun validateEmail(): Boolean {
@@ -95,7 +90,6 @@ class reset_pass : Fragment() {
             reset_email.helperText = validUserEmail()
         }
 
-
     }
 
     fun validUserEmail(): String? {
@@ -104,7 +98,6 @@ class reset_pass : Fragment() {
 
             return "Empty Email"
         }
-
         return null
     }
 

@@ -9,8 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.finalandroid.DAO.BackUpModel
 import com.example.finalandroid.DAO.Expense
 import com.example.finalandroid.DAO.TripModel
-import com.example.finalandroid.R
 import com.example.finalandroid.NetworkManagement.NetworkConnection
+import com.example.finalandroid.R
 import com.example.finalandroid.viewmodel.ExpenseViewModel
 import com.example.finalandroid.viewmodel.TripViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -27,6 +27,7 @@ open class fragment_backup : Fragment() {
     private lateinit var tripViewModel: TripViewModel
     private lateinit var expenseViewModel: ExpenseViewModel
     private lateinit var networkConnection: NetworkConnection
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

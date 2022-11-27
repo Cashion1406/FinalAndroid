@@ -1,11 +1,13 @@
 package com.example.finalandroid.login
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.finalandroid.MainActivity
@@ -43,7 +45,7 @@ class login : Fragment() {
         }
         tv_forgot_password.setOnClickListener {
             val action = loginDirections.actionLoginToResetPass()
-
+            view.hideKeyboard()
             findNavController().navigate(action)
         }
 
@@ -61,27 +63,27 @@ class login : Fragment() {
 
     }
 
-    private fun checkUser() {
+        private fun checkUser() {
 
-        val useremail = ed_email.text.toString().trim { it <= ' ' }
-        val userpass = ed_pass.text.toString().trim { it <= ' ' }
+            val useremail = ed_email.text.toString().trim { it <= ' ' }
+            val userpass = ed_pass.text.toString().trim { it <= ' ' }
 
-        if (useremail.isNotEmpty() && userpass.isNotEmpty()) {
-            showProgress("Please Wait")
-            FirebaseAuth.getInstance().signInWithEmailAndPassword(useremail, userpass)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        hideProgress()
-                        val intent = Intent(requireContext(), MainActivity::class.java)
-                        intent.putExtra("UID", FirebaseAuth.getInstance().currentUser?.uid)
-                        startActivity(intent)
-                        requireActivity().finish()
+            if (useremail.isNotEmpty() && userpass.isNotEmpty()) {
+                showProgress("Please Wait")
+                FirebaseAuth.getInstance().signInWithEmailAndPassword(useremail, userpass)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            hideProgress()
+                            val intent = Intent(requireContext(), MainActivity::class.java)
+                            intent.putExtra("UID", FirebaseAuth.getInstance().currentUser?.uid)
+                            startActivity(intent)
+                            requireActivity().finish()
 
-                    } else {
-                        hideProgress()
-                        tv_warning.text = task.exception?.message.toString()
+                        } else {
+                            hideProgress()
+                            tv_warning.text = task.exception?.message.toString()
+                        }
                     }
-                }
         } else {
             username()
             userpass()
@@ -174,6 +176,10 @@ class login : Fragment() {
     fun hideProgress() {
         loadingProgressBar.dismiss()
 
+    }
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 
 

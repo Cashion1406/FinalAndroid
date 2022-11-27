@@ -148,15 +148,17 @@ class dashboard_fragment : Fragment() {
 
     fun getSelecttransport() {
 
-
+        currentTransportation = null
         tv_chip_group.setOnCheckedChangeListener { _, _ ->
 
             val id: Int = tv_chip_group.checkedRadioButtonId
             val rb: RadioButton = tv_chip_group.findViewById(id)
+            rb.isSaveEnabled = false
+            rb.isSaveFromParentEnabled = false
             currentTransportation = rb.text.toString()
             filterchip(rb.text.toString())
-        }
 
+        }
 
     }
 
@@ -164,8 +166,10 @@ class dashboard_fragment : Fragment() {
     fun filterchip(type: String) {
 
         val chipfill: ArrayList<TripModel> = ArrayList()
-        tripviewmode.tripList.observe(viewLifecycleOwner) { trip ->
+        tripviewmode.getalltrip().observe(viewLifecycleOwner) { trip ->
             for (t in trip) {
+
+                //transport fitler
                 if (t.transpotation?.lowercase(Locale.ROOT)
                         ?.contains(type.lowercase(Locale.ROOT)) == true
                 ) {
@@ -173,7 +177,9 @@ class dashboard_fragment : Fragment() {
 
                         chipfill.add(t)
 
-                    } else {
+                    }
+                    //current transport with cur
+                    else {
                         if (t.name.lowercase(Locale.ROOT)
                                 .contains(currentSearch!!.lowercase(Locale.ROOT))
                         ) {
@@ -181,8 +187,10 @@ class dashboard_fragment : Fragment() {
                         }
                     }
                 } else if (type == "Clear") {
+                    currentTransportation = null
                     chipfill.add(t)
                 }
+
             }
         }
         tripAdapter.setTrip(chipfill)
@@ -192,7 +200,7 @@ class dashboard_fragment : Fragment() {
     private fun newfill(newText: String) {
         val filter: ArrayList<TripModel> = ArrayList()
 
-        tripviewmode.tripList.observe(this) { tripss ->
+        tripviewmode.getalltrip().observe(viewLifecycleOwner) { tripss ->
 
             for (e in tripss) {
 
@@ -213,8 +221,9 @@ class dashboard_fragment : Fragment() {
                     }
                 }
             }
-            tripAdapter.setTrip(filter)
+
         }
+        tripAdapter.setTrip(filter)
     }
 
     private fun loadusername() {
@@ -248,6 +257,7 @@ class dashboard_fragment : Fragment() {
 
     fun viewTrip() {
         tripviewmode.getalltrip().observe(viewLifecycleOwner) { trip ->
+            tripAdapter.setTrip(trip)
             sv_trip.queryHint = "${trip.size} trips available"
             if (trip.isNotEmpty()) {
 
@@ -263,10 +273,6 @@ class dashboard_fragment : Fragment() {
                     )!!
                 )
                 rv_trip.addItemDecoration(divider)//*
-
-                tripviewmode.getalltrip().observe(viewLifecycleOwner) { trip ->
-                    tripAdapter.setTrip(trip)
-                }
 
                 ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
                     override fun onMove(
